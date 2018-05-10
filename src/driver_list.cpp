@@ -6,7 +6,7 @@
 
 using namespace std;
 /*
-bool cmp(sc::list& va, std::list& vb){
+bool cmp(ls::list& va, std::list& vb){
     auto size = va.size();
     if(size != vb.size())
         return false;
@@ -17,7 +17,7 @@ bool cmp(sc::list& va, std::list& vb){
     return true;
 }
 
-std::ostream & operator<<( std::ostream& os_, const std::vector<int>& v_ ){
+std::ostream & operator<<( std::ostream& os_, const std::list<int>& v_ ){
     os_ << "Vetor = [ ";
     for( auto i(0u); i < v_.size(); i++ ){
         os_ << v_[i] << " ";
@@ -32,25 +32,46 @@ int main(){
     
     // DEBUG
     
-    unique_ptr< sc::vector<int> > av(new sc::vector<int>);
-    unique_ptr< sc::vector<int> > bv(new sc::vector<int>);
-    unique_ptr< std::vector<int> > a_v(new std::vector<int>);
-    unique_ptr< std::vector<int> > b_v(new std::vector<int>);
+    unique_ptr< ls::list<int> > list_a(new ls::list<int>);
+    unique_ptr< ls::list<int> > list_b(new ls::list<int>);
+    unique_ptr< std::list<int> > std_list_a(new std::list<int>);
+    unique_ptr< std::list<int> > std_list_b(new std::list<int>);
     
-    sc::vector<int>::iterator itc1;
-    std::vector<int>::iterator itd1;
-    sc::vector<int>::iterator itc2;
-    std::vector<int>::iterator itd2;
-    sc::vector<int>::iterator itc3;
-    std::vector<int>::iterator itd3;
+    ls::list<int>::iterator itc1();
+    std::list<int>::iterator itd1();
+    ls::list<int>::iterator itc2();
+    std::list<int>::iterator itd2();
+    ls::list<int>::iterator itc3();
+    std::list<int>::iterator itd3();
     // inserção três Elementos ordenado
     
-    av->push_back(3);
-    av->push_back(4);
-    a_v->push_back(3);
-    a_v->push_back(4);
-    
-    assert(cmp(*av, *a_v) && "Error at push_back methode");
+    list_a->push_front(1);
+    list_a->print();
+    std::cout << "\n";
+    list_a->push_front(2);
+    list_a->print();
+    std::cout << "\n";
+    list_a->push_front(3);
+    list_a->print();
+    std::cout << "\n";
+
+    list_b->push_front(4);
+    list_b->print();
+    std::cout << "\n";
+    list_b->push_front(5);
+    list_b->print();
+    std::cout << "\n";
+    list_b->push_front(6);
+    list_b->print();
+    std::cout << "\n";
+    auto first = ls::list<int>::iterator(list_b->begin());
+    auto last = ls::list<int>::iterator(list_b->begin());
+    ++last;
+    ++last;
+    ++last;
+    list_b->insert(++list_a->begin(), first , last);
+    /*
+    assert(cmp(*av, *a_v) && "Error at push_front methode");
     
     av->push_front(2);
     av->push_front(1);
@@ -59,8 +80,8 @@ int main(){
     
     assert(cmp(*av, *a_v) && "Error at push_front methode.");
     
-    bv = unique_ptr < sc::vector<int> > ( new sc::vector<int> ( *av ) );
-    b_v = unique_ptr < std::vector<int> > ( new std::vector<int> ( *a_v ) );
+    bv = unique_ptr < ls::list<int> > ( new sc::vector<int> ( *av ) );
+    b_v = unique_ptr < std::list<int> > ( new std::vector<int> ( *a_v ) );
     
     assert(cmp(*bv, *b_v) && "Error at copy construtor.");
     
@@ -76,17 +97,17 @@ int main(){
     
     assert(cmp(*av, *a_v) && cmp(*bv, *b_v) && "Error at move assignment.");
     
-    bv = unique_ptr < sc::vector<int> >  ( new sc::vector<int> {6, 7, 8, 9, 10} );
-    b_v = unique_ptr < std::vector<int> >  ( new std::vector<int> {6, 7, 8, 9, 10} );
+    bv = unique_ptr < ls::list<int> >  ( new sc::vector<int> {6, 7, 8, 9, 10} );
+    b_v = unique_ptr < std::list<int> >  ( new std::vector<int> {6, 7, 8, 9, 10} );
     
     assert(cmp(*bv, *b_v) && "Error at initalizer list constructor.");
     
-    av = unique_ptr < sc::vector<int> >  ( new sc::vector<int> (bv->begin()+1, bv->begin()+4) );
-    a_v = unique_ptr < std::vector<int> >  ( new std::vector<int> (b_v->begin()+1, b_v->begin()+4) );
+    av = unique_ptr < ls::list<int> >  ( new sc::vector<int> (bv->begin()+1, bv->begin()+4) );
+    a_v = unique_ptr < std::list<int> >  ( new std::vector<int> (b_v->begin()+1, b_v->begin()+4) );
     
     assert(cmp(*av, *a_v) && "Error at ranges constructor.");
     
-    sc::swap(*av, *bv); // o std::swap nao chamará sc::swap. Ao invés disso usará o move-constructor e move-assignment.
+    ls::swap(*av, *bv); // o std::swap nao chamará sc::swap. Ao invés disso usará o move-constructor e move-assignment.
     std::swap(*a_v, *b_v);
     
     assert(cmp(*av, *a_v) && cmp(*bv, *b_v) && "Error at swap methode.");
@@ -125,7 +146,7 @@ int main(){
     std::cout << *a_v << "\n";
     assert(cmp(*av, *a_v) && "Error at insert element function.");
     
-    /*
+    
     //assert(*itc1 == *itd1 && *itc2 == *itd2 && *itc3 == *itd3 && "Error at return of insert element function.");
 
     // no começo
@@ -157,8 +178,8 @@ int main(){
    
 
 
-    unique_ptr < sc::vector<int> > bv1 ( new sc::vector<int> {23, 24, 25, 26, 27, 28, 29, 30} );
-    unique_ptr < std::vector<int> > b_v1 ( new std::vector<int> {23, 24, 25, 26, 27, 28, 29, 30} );
+    unique_ptr < ls::list<int> > bv1 ( new sc::vector<int> {23, 24, 25, 26, 27, 28, 29, 30} );
+    unique_ptr < std::list<int> > b_v1 ( new std::vector<int> {23, 24, 25, 26, 27, 28, 29, 30} );
 
     *bv = *bv1;
     *b_v =  *b_v1;
