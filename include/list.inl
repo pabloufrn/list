@@ -7,120 +7,57 @@ using namespace ls;
 /// Implementa a infraestrutura para suportar um ponteiro bidirecional.
 /// Construtor a partir de um ponteiro. 
 template <typename T>
-inline MyIterator<T>::MyIterator( Node<T> pt ): current(pt)
+inline const_iterator<T>::const_iterator<T>( Node<T> *p ): current(p)
 {
 }
-/**/
-/// Construtor copia.
-    template <typename T>
-inline MyIterator<T>::MyIterator( const MyIterator<T> & itr): current(itr->current)
-{}
-/**/
+
+inline const_iterator<T>::const_iterator<T>( ) {
+    this->current = nullptr;
+}
+
 /// Acessar o conteúdo o qual o ponteiro aponta.
 template <typename T>
-inline T& MyIterator<T>::operator*() const
+inline const_iterator<T> & const_iterator<T>::operator*() const
 {
     return this->current->value;
 }
-/**/
-/// Destrutor da classe.
-    template <typename T>
-inline MyIterator<T>::~MyIterator()
-{
-    this->current->~Node<T>();
-}
-/**/
+
 /// Operador de pré-incremento.
-    template <typename T>
-MyIterator<T> & MyIterator<T>::operator++( )
+template <typename T>
+const_iterator<T> & const_iterator<T>::operator++( )
 {
     this->current = this->current->next;
     return list<T>::iterator(*this->current);
 }
-/**/
+
 /// Operador de pós-incremento.
-    template <typename T>
-MyIterator<T> MyIterator<T>::operator++( int )
+template <typename T>
+const_iterator<T> const_iterator<T>::operator++( int )
 {
     this->current = this->current->next;
     return MyIterator(this->current->prev);
 }
-/**/
+
 /// Operador de pré-decremento.
 /* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
-    template <typename T>
-MyIterator<T> & MyIterator<T>::operator--()
+template <typename T>
+const_iterator<T> & const_iterator<T>::operator--()
 {
     this->current = this->current->prev;
     return this->current;
 }
 /**/
 /// Operador de pós-decremento. 
-    template <typename T>
-MyIterator<T> MyIterator<T>::operator--( int )
+template <typename T>
+const_iterator<T> const_iterator<T>::operator--( int )
 {
     this->current = this->current->prev;
     return this->current->next;
 }
 
-template <typename T>
-bool MyIterator<T>::operator>=( const MyIterator<T> & rhs ) const
-{
-    auto curr(this->current);
-    while(curr != nullptr)
-    {
-        if(curr == rhs)
-            return true;
-        curr = curr->prev;
-    }
-    return false;
-}
-/**/
-/// Operador de comparação se é >=.
-
-template <typename T>
-bool MyIterator<T>::operator>( const MyIterator<T> & rhs ) const
-{
-    auto curr(this->current);
-    while(curr != nullptr)
-    {
-        if(curr == rhs)
-            return false;
-        curr = curr->next;
-    }
-    return true;
-}
-/**/
-/// Operador de comparação se é <
-template <typename T>
-bool MyIterator<T>::operator<( const MyIterator<T> & rhs ) const
-{
-    auto curr(this->current);
-    while(curr != nullptr)
-    {
-        curr = curr->next;
-        if(curr == rhs)
-            return true;
-    }
-    return false;
-}
-/**/
-/// Operador de comparação se é >
-template <typename T>
-bool MyIterator<T>::operator<=( const MyIterator<T> & rhs ) const
-{
-    auto curr(this->current);
-    while(curr != nullptr)
-    {
-        if(curr == rhs)
-            return true;
-        curr = curr->next;
-    }
-    return false;
-}
 /// Comparar dois iteradores se são iguais.
 template <typename T>
-bool MyIterator<T>::operator==( const MyIterator<T> & rhs ) const
+bool const_iterator<T>::operator==( const const_iterator<T> & rhs ) const
 {
     return this->current == rhs.current;
 }
@@ -128,18 +65,14 @@ bool MyIterator<T>::operator==( const MyIterator<T> & rhs ) const
 /// Comprar dois iteradores se são difentes.
 
 template <typename T>
-bool MyIterator<T>::operator!=( const MyIterator<T> & rhs ) const
+bool const_iterator<T>::operator!=( const const_iterator<T> & rhs ) const
 {
     return this->current != rhs.current;
 }
 /**/
 /// Operador de atribuição.
 
-    template <typename T>
-MyIterator<T> & MyIterator<T>::operator=( const MyIterator<T> & rhs )
-{
-    this->current = rhs->current;
-}
+
 
 
 

@@ -26,6 +26,7 @@ namespace ls {
 
     /// Implementação do Iterador constante
 
+    template< typename T >
     class const_interator{
 
     public:
@@ -50,8 +51,8 @@ namespace ls {
         bool operator!=( const const_iterator & rhs ) const;
 
     protected:
-        Node *current;
-        const_iterator( Node *p ) : current(p);
+        Node<T> *current;
+        const_iterator( Node *p );
         friend class List<reference>;
     }
 
