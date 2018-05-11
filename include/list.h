@@ -145,11 +145,15 @@ namespace ls {
                                                                     the list with the elements from the initializer list ilist .
                                                                     We may call, for instance, myList.assign( {1, 2, 3, 4} ) , to replace the elements
                                                                     of the list with the elements 1, 2, 3, and 4, assuming that myList is a list of int .
-                                                                    */
+
+                                                                                */
+                iterator insert(iterator pos,   const T & value);
+                template < typename InItr >
+                iterator insert( iterator pos, InItr first, InItr last);
                 iterator insert( const_iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
                                                                                   of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the ele-
                                                                                   ments 1, 2, 3, and 4 in the list before pos , assuming that myList is a list of int .*/
-                iterator erase( const_iterator itr );
+                iterator erase( iterator pos );
                 iterator erase( iterator first, iterator last );/* : removes elements in the
                                                                    range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                                                                    */ 
