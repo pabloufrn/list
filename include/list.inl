@@ -62,20 +62,6 @@ MyIterator<T> MyIterator<T>::operator--( int )
     this->current = this->current->prev;
     return this->current->next;
 }
-/**/
-/// Operador de soma.
-/*
-   MyIterator operator+( int );
-/**/
-/// Operador de subtração.
-/*
-   MyIterator operator-( int );
-/**/
-/// Sobrecarga do operador ->.
-/*
-   MyIterator * operator->( void ) const;
-/**/
-/// Operador de comparação se é <=.
 
 template <typename T>
 bool MyIterator<T>::operator>=( const MyIterator<T> & rhs ) const
