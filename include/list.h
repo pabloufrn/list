@@ -84,7 +84,7 @@ namespace ls {
                 iterator operator--( int );
 
             protected:
-                iterator( Node *p ) : const_iterator( p );
+                iterator( Node *p );
                 friend class List<reference>;
 
         };

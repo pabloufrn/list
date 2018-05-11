@@ -6,6 +6,11 @@
 using namespace ls;
 /// Implementa a infraestrutura para suportar um ponteiro bidirecional.
 /// Construtor a partir de um ponteiro. 
+
+
+// ####################### CONST_ITERATOR #######################
+
+
 template <typename T>
 inline const_iterator<T>::const_iterator<T>( Node<T> *p ): current(p)
 {
@@ -69,55 +74,173 @@ bool const_iterator<T>::operator!=( const const_iterator<T> & rhs ) const
 {
     return this->current != rhs.current;
 }
-/**/
-/// Operador de atribuição.
 
 
 
 
-
-
-
-
-
-
-
-
-
+// ####################### ITERATOR #######################
 
 
 
 
 template <typename T>
-/// Constructors, Destructors, and Assignment
-list<T>::list(): head(nullptr) {}
-/*
-  explicit list( size_type count );
-  template< typename InputIt >
-  list( InputIt first, InputIt last );
-  list( const list& other );
-  list( std::initializer_list<T> ilist );
-  */
+inline iterator<T>::iterator<T>( Node<T> *p ): const_iterator( p )
+{
+    /* empty */
+}
+
+inline iterator<T>::iterator<T>( ) : const_iterator( ) { /* empty */}
+
+/// Acessar o conteúdo o qual o ponteiro aponta.
+/// TODO: VERIFICAR SE ESTÁ IMPLEMENTAÇÃO ESTÁ CORRETA <--------------------
+template <typename T>
+inline iterator<T> & iterator<T>::operator*() const
+{
+    return iterator<T>();
+}
+
+/// Operador de pré-incremento.
+template <typename T>
+iterator<T> & iterator<T>::operator++( )
+{
+    return iterator<T>(this);
+}
+
+/// Operador de pós-incremento.
+template <typename T>
+const_iterator<T> const_iterator<T>::operator++( int )
+{
+    return iterator<T>(this);
+}
+
+/// Operador de pré-decremento.
+/* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
+template <typename T>
+const_iterator<T> & const_iterator<T>::operator--()
+{
+    return iterator<T>(this);
+}
+/**/
+/// Operador de pós-decremento. 
+template <typename T>
+const_iterator<T> const_iterator<T>::operator--( int )
+{
+    return iterador<T>(this);
+}
+
+
+
+
+
+// ####################### LIST #######################
+
+
+
+
+
+/// [I] SPECIAL MEMBERS
+
+template <typename T>
+list<T>::list(): m_head(nullptr), m_tail(nullptr), m_size(0) {}
+
 template <typename T>
 list<T>::~list()
 {
-    auto curr(head);
-    if(curr == nullptr)
+    auto curr(m_head);
+    auto end_curr(m_tail);
+    
+    if(curr == nullptr && end_curr == nullptr)
         return;
+
     while(curr->next != nullptr)
     {
         curr = curr->next;
         delete(curr->prev);
     }
+
+    // É necessário fazer o do end_curr? Já que o curr percorre todo a lista?
+
+    while(end_curr != nullptr){
+        end_curr = end_curr->prev;
+        delete(end_curr->next);
+    }
 }
-  /*
-  list& operator=( const list& other );
-  list& operator=( std::initializer_list<T> ilist );
+
+/// Criando nova lista a partir de outra.
+/// Aqui foi feito desenho para entender o desenvolvimento.
+template < typename T >
+list<T>::list( const list<T> & other ){
+    this->m_size = other.m_size;
+
+    this->m_head = new Node<T>();
+    m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
+    m_head->prev = nullptr;
+
+    current(this->m_head);
+    other_perr(other);
+
+    for( auto i(0) ; i < this->m_size ; ++i ){
+
+        Node<T> *new_node = new Node<T>();
+        new_node->data = other_perr->next->data;
+        
+        new_node->prev = current;
+
+        current->next = new_node;
+        
+        current = current->next;
+        other_perr = other_perr->next;
+    }
+
+    m_prev = current;
+}
+
+/// Seria no caso uma cópia do construtor da classe List?
+list<T>::list & operator=( const list<T> & other ){
+
+    this->m_size = other.m_size;
+
+    this->m_head = new Node<T>();
+    m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
+    m_head->prev = nullptr;
+
+    current(this->m_head);
+    other_perr(other);
+
+    for( auto i(0) ; i < this->m_size ; ++i ){
+
+        Node<T> *new_node = new Node<T>();
+        new_node->data = other_perr->next->data;
+        
+        new_node->prev = current;
+
+        current->next = new_node;
+        
+        current = current->next;
+        other_perr = other_perr->next;
+    }
+
+    m_prev = current;
+
+    return m_head;
+
+}
+
+/// [III] CAPACITY
+
+// returns true if the container contains no elements, and false otherwise.i*/
+bool list<T>::empty(){
+    return m_size == 0;
+}
 
 /// Common operations to all list implementations
-size_type size(); // return the number of elements in the container.
+// return the number of elements in the container.
+int list<T>::size(){
+    return m_size;
+}
+
 void clear(); // remove (either logically or physically) all elements from the container.
-bool empty(); // returns true if the container contains no elements, and false otherwise.i*/
+
 template <typename T>
 void list<T>::push_back( const T & value ) 
 {
