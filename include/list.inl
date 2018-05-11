@@ -1,7 +1,7 @@
 #include <iostream>
 /*TODO: remover coisas que forem desnecessarias*/
 
-#include "list.hpp"
+#include "list.h"
 
 using namespace ls;
 /// Implementa a infraestrutura para suportar um ponteiro bidirecional.
