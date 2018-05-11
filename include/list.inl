@@ -235,7 +235,7 @@ bool list<T>::empty(){
 
 /// Common operations to all list implementations
 // return the number of elements in the container.
-int list<T>::size(){
+size_type list<T>::size() const{
     return m_size;
 }
 

@@ -102,9 +102,15 @@ namespace ls {
 
                 /// [I] Special Members
                 list();
-                ~list();
+                explicit list( size_type count );
+                template < typename InputIt >
+                list( InputIt first , InputIt last );
                 list( const list& other );
+                list( std::initializer_list<T> ilist );
+                ~list();
                 list& operator=( const list& other );
+                list& operator=( std::initializer_list<T> ilist );
+
                 
                 /// [II] Iterators
                 /// Getting an iterator
@@ -115,16 +121,14 @@ namespace ls {
 
 
                 /// [III] Capacity
-                int size(); // return the number of elements in the container.
+                size_type size() const; // return the number of elements in the container.
                 bool empty(); // returns true if the container contains no elements, and false otherwise.
 
 
                 /// [IV] Modifies
                 void clear(); // remove (either logically or physically) all elements from the container.
-                T & front();
-                const T & front();// const : returns the object at the beginning of the list.
-                T & back();
-                const T & back(); // const : returns the object at the end of the list.
+                const T & front() const;// const : returns the object at the beginning of the list.
+                const T & back() const; // const : returns the object at the end of the list.
                 void push_front( const T & value ); // : adds value to the front of the list.
                 void push_back( const T & value ); //: adds value to the end of the list.
                 void pop_front(); // : removes the object at the front of the list.
