@@ -12,24 +12,20 @@ using namespace ls;
 
 
 template <typename T>
-inline const_iterator<T>::const_iterator<T>( Node<T> *p ): current(p)
+inline my_const_iterator<T>::my_const_iterator(Node<my_const_iterator::value_type> * node): current(node)
 {
-}
-
-inline const_iterator<T>::const_iterator<T>( ) {
-    this->current = nullptr;
 }
 
 /// Acessar o conteúdo o qual o ponteiro aponta.
 template <typename T>
-inline const_iterator<T> & const_iterator<T>::operator*() const
+typename my_const_iterator<T>::const_reference & my_const_iterator<T>::operator*() const
 {
     return this->current->value;
 }
-
+/**/
 /// Operador de pré-incremento.
 template <typename T>
-const_iterator<T> & const_iterator<T>::operator++( )
+my_const_iterator<T> & my_const_iterator<T>::operator++( )
 {
     this->current = this->current->next;
     return list<T>::iterator(*this->current);
@@ -37,7 +33,7 @@ const_iterator<T> & const_iterator<T>::operator++( )
 
 /// Operador de pós-incremento.
 template <typename T>
-const_iterator<T> const_iterator<T>::operator++( int )
+my_const_iterator<T> my_const_iterator<T>::operator++( int )
 {
     this->current = this->current->next;
     return MyIterator(this->current->prev);
@@ -46,7 +42,7 @@ const_iterator<T> const_iterator<T>::operator++( int )
 /// Operador de pré-decremento.
 /* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
 template <typename T>
-const_iterator<T> & const_iterator<T>::operator--()
+my_const_iterator<T> & my_const_iterator<T>::operator--()
 {
     this->current = this->current->prev;
     return this->current;
@@ -54,7 +50,7 @@ const_iterator<T> & const_iterator<T>::operator--()
 /**/
 /// Operador de pós-decremento. 
 template <typename T>
-const_iterator<T> const_iterator<T>::operator--( int )
+my_const_iterator<T> my_const_iterator<T>::operator--( int )
 {
     this->current = this->current->prev;
     return this->current->next;
@@ -62,7 +58,7 @@ const_iterator<T> const_iterator<T>::operator--( int )
 
 /// Comparar dois iteradores se são iguais.
 template <typename T>
-bool const_iterator<T>::operator==( const const_iterator<T> & rhs ) const
+bool my_const_iterator<T>::operator==( const my_const_iterator<T> & rhs ) const
 {
     return this->current == rhs.current;
 }
@@ -70,7 +66,7 @@ bool const_iterator<T>::operator==( const const_iterator<T> & rhs ) const
 /// Comprar dois iteradores se são difentes.
 
 template <typename T>
-bool const_iterator<T>::operator!=( const const_iterator<T> & rhs ) const
+bool my_const_iterator<T>::operator!=( const my_const_iterator<T> & rhs ) const
 {
     return this->current != rhs.current;
 }
@@ -84,48 +80,52 @@ bool const_iterator<T>::operator!=( const const_iterator<T> & rhs ) const
 
 
 template <typename T>
-inline iterator<T>::iterator<T>( Node<T> *p ): const_iterator( p )
+inline my_iterator<T>::my_iterator( Node<my_iterator::value_type> * node ): current(node) 
 {
     /* empty */
 }
 
-inline iterator<T>::iterator<T>( ) : const_iterator( ) { /* empty */}
-
 /// Acessar o conteúdo o qual o ponteiro aponta.
 /// TODO: VERIFICAR SE ESTÁ IMPLEMENTAÇÃO ESTÁ CORRETA <--------------------
 template <typename T>
-inline iterator<T> & iterator<T>::operator*() const
+inline typename my_iterator<T>::reference my_iterator<T>::operator*() const
 {
-    return iterator<T>();
+    return this->current->value;
 }
 
 /// Operador de pré-incremento.
 template <typename T>
-iterator<T> & iterator<T>::operator++( )
+my_iterator<T> & my_iterator<T>::operator++( )
 {
-    return iterator<T>(this);
+    return my_iterator<T>(this);
 }
 
 /// Operador de pós-incremento.
 template <typename T>
-const_iterator<T> const_iterator<T>::operator++( int )
+my_iterator<T> my_iterator<T>::operator++( int )
 {
-    return iterator<T>(this);
+    this->current = this->current->next;
+
+    /* esse codigo, ao contrario de um codigo que guardaria current numa variavel
+     * temporária, obriga o algoritmo a lancar o segmetation fault.
+     * Caso não fizessimos assim estarimos apenas adiando o inevitavel.*/
+    return my_iterator<T>(this->current->prev);
 }
 
 /// Operador de pré-decremento.
 /* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
 template <typename T>
-const_iterator<T> & const_iterator<T>::operator--()
+my_iterator<T> & my_iterator<T>::operator--()
 {
-    return iterator<T>(this);
+    return --my_iterator<T>(this);
 }
 /**/
 /// Operador de pós-decremento. 
 template <typename T>
-const_iterator<T> const_iterator<T>::operator--( int )
+my_iterator<T> my_iterator<T>::operator--( int )
 {
-    return iterador<T>(this);
+    this->current = this->current->next;
+    return iterador(this->current->prev);
 }
 
 
@@ -168,6 +168,7 @@ list<T>::~list()
 
 /// Criando nova lista a partir de outra.
 /// Aqui foi feito desenho para entender o desenvolvimento.
+/*
 template < typename T >
 list<T>::list( const list<T> & other ){
     this->m_size = other.m_size;
@@ -194,8 +195,9 @@ list<T>::list( const list<T> & other ){
 
     m_prev = current;
 }
-
+/**/
 /// Seria no caso uma cópia do construtor da classe List?
+/*
 list<T>::list & operator=( const list<T> & other ){
 
     this->m_size = other.m_size;
@@ -225,20 +227,22 @@ list<T>::list & operator=( const list<T> & other ){
     return m_head;
 
 }
-
+/**/
 /// [III] CAPACITY
 
 // returns true if the container contains no elements, and false otherwise.i*/
+/*
 bool list<T>::empty(){
     return m_size == 0;
 }
-
+/**/
 /// Common operations to all list implementations
 // return the number of elements in the container.
+/*
 size_type list<T>::size() const{
     return m_size;
 }
-
+/**/
 void clear(); // remove (either logically or physically) all elements from the container.
 
 template <typename T>
@@ -286,14 +290,14 @@ void list<T>::push_front( const T & value )
    */
 
     template <typename T>
-T& list<T>::at(list<T>::size_type index)
+T& list<T>::at(list<T>::size_type & index)
 {
     Node<T>* curr = this->head;
 
     if(curr == nullptr)
         throw std::out_of_range("Index provided is outside the array range.");
 
-    for(int i = 0; i < index; ++i)
+    for(auto i(0u); i < index; ++i)
     {
         if(curr == nullptr)
             throw std::out_of_range("Index provided is outside the array range.");
@@ -308,7 +312,7 @@ T& list<T>::at(list<T>::size_type index)
 template <typename T>
 typename list<T>::iterator list<T>::begin()
 {
-    return list<T>::iterator(*head);
+    return list<T>::iterator(*this->head);
 
 }
 /*
@@ -330,7 +334,7 @@ typename list<typename InItr::value_type>::iterator insert(typename list<typenam
     using T = typename InItr::value_type;
     auto range_size = last - first; 
     auto replace(pos + range_size);
-    auto new_node = MyIterator<T>();
+    auto new_node = Node<T>();
     *(first).prev = pos->prev;
     (*pos).prev->next = *first;
     (*pos).prev = last;

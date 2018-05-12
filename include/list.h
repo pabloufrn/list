@@ -27,38 +27,37 @@ namespace ls {
     /// Implementação do Iterador constante
 
     template< typename T >
-    class const_interator{
+    class my_const_iterator {
 
     public:
 
-        using value_type = T;
+        using value_type = const T;
         /// Ponteiro para o valor do tipo.
         using pointer = value_type *;
         /// Referência para o valor do tipo.
-        using reference = value_type &;
-        /// Referência para o valor constante do tipo.
-        using const_reference = const value_type &;  
+        using const_reference = value_type &;
         /// Tipo de diferência para calcular a distância entre dois ponteiros.
         using difference_type = std::ptrdiff_t;
 
-        const_iterator();
-        const reference & operator* () const;
-        const_iterator & operator++(); // ++it;
-        const_iterator operator++( int ); // it++;
-        const_iterator & operator--(); // --it;
-        const_iterator operator--(); //it--;
-        bool operator==( const const_iterator & rhs ) const;
-        bool operator!=( const const_iterator & rhs ) const;
+        //const_iterator(Node<value_type> * node = nullptr);
+        const_reference & operator* () const;
+        my_const_iterator & operator++(); // ++it;
+        my_const_iterator operator++( int ); // it++;
+        my_const_iterator & operator--(); // --it;
+        my_const_iterator operator--( int ); //it--;
+        bool operator==( const my_const_iterator & rhs ) const;
+        bool operator!=( const my_const_iterator & rhs ) const;
 
     protected:
-        Node<T> *current;
-        const_iterator( Node *p );
-        friend class List<reference>;
-    }
+        Node<value_type> *current;
+        my_const_iterator( Node<value_type> * node = nullptr );
+        //friend class list<reference>;
+    };
 
     /// Implementa a infraestrutura para suportar um ponteiro bidirecional.
     template < typename T>
-        class iterator : public const_iterator {
+        class my_iterator : public my_const_iterator<T> 
+    {
 
             public:
 
@@ -74,18 +73,17 @@ namespace ls {
                 /// Tipo de diferência para calcular a distância entre dois ponteiros.
                 using difference_type = std::ptrdiff_t;
 
-                iterator( ) : const_iterator(){ /* Empty */}
-                const reference & operator*() const;
+                my_iterator( Node<value_type> * = nullptr ); 
+                reference & operator*() const;
                 reference & operator* ();
 
-                iterator & operator++();
-                iterator operator++( int );
-                iterator & operator--();
-                iterator operator--( int );
+                my_iterator & operator++();
+                my_iterator operator++( int );
+                my_iterator & operator--();
+                my_iterator operator--( int );
 
-            protected:
-                iterator( Node *p );
-                friend class List<reference>;
+            private:
+                Node<T> *current; 
 
         };
 
@@ -94,9 +92,10 @@ namespace ls {
         class list{
             public:
                 /// ALIASES
+                using value_type = T;
                 using size_type = size_t;
-                using iterator = MyIterator<T>;
-                using const_iterator = MyIterator<const T>;
+                using iterator = my_iterator<value_type>;
+                using const_iterator = my_const_iterator<value_type>;
                 using difference_type = std::ptrdiff_t;
                 using reference = T&;
 
@@ -159,10 +158,13 @@ namespace ls {
                                                                    */ 
                 const_iterator find( const T & value ) const;
 
+                // [V] Acess Operators
+                reference at(size_type & index);
+
                 // TODO: Apenas para depuração
                 void print()
                 {
-                    auto current( head );
+                    auto current( this->head );
                     std::cout << "[ ";
 
                     // caso especial de lista vazia.
