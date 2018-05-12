@@ -355,11 +355,10 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, I
     // caso especial - inserção no começo ou lista vazia
     auto old_pos(pos);
     if(pos.current != nullptr)
-    {
          pos = pos.current->prev;
-    }
 
-    auto inserted_pos(&pos);
+    auto inserted_pos_before(pos);
+    inserted_pos_before.current->next = &(*pos.current->next);
     // percorremos o range
     Node<T> *new_node;
 
@@ -375,7 +374,7 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, I
     old_pos.current->prev = new_node;
     new_node->next = old_pos.current;
     
-    return *inserted_pos;
+    return ++inserted_pos_before; 
 
 }
 //iterator insert( const_iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user

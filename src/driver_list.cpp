@@ -68,9 +68,9 @@ int main(){
     ++last;
    // ++last;
     std::cout << "first: " << *first << " last: " << *last << std::endl;
-    list_a->insert(++list_a->begin(), first , last);
+    auto result = list_a->insert(++list_a->begin(), first , last);
     list_a->print();
-    std::cout << std::endl;
+    std::cout << " result: " << *result << std::endl;
     /*
     assert(cmp(*av, *a_v) && "Error at push_front methode");
     
