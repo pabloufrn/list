@@ -37,12 +37,10 @@ int main(){
     unique_ptr< std::list<int> > std_list_a(new std::list<int>);
     unique_ptr< std::list<int> > std_list_b(new std::list<int>);
     
-    ls::list<int>::iterator itc1();
-    std::list<int>::iterator itd1();
-    ls::list<int>::iterator itc2();
-    std::list<int>::iterator itd2();
-    ls::list<int>::iterator itc3();
-    std::list<int>::iterator itd3();
+    ls::list<int>::iterator it_ls_a;
+    std::list<int>::iterator it_std_a;
+    ls::list<int>::iterator it_ls_b;
+    std::list<int>::iterator it_std_b;
     // inserção três Elementos ordenado
     
     list_a->push_front(1);
@@ -68,8 +66,11 @@ int main(){
     auto last = ls::list<int>::iterator(list_b->begin());
     ++last;
     ++last;
-    ++last;
-    list_b->insert(++list_a->begin(), first , last);
+   // ++last;
+    std::cout << "first: " << *first << " last: " << *last << std::endl;
+    list_a->insert(++list_a->begin(), first , last);
+    list_a->print();
+    std::cout << std::endl;
     /*
     assert(cmp(*av, *a_v) && "Error at push_front methode");
     

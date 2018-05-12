@@ -51,7 +51,7 @@ namespace ls {
     protected:
         Node<value_type> *current;
         my_const_iterator( Node<value_type> * node = nullptr );
-        //friend class list<reference>;
+        friend class list<value_type>;
     };
 
     /// Implementa a infraestrutura para suportar um ponteiro bidirecional.
@@ -81,10 +81,11 @@ namespace ls {
                 my_iterator operator++( int );
                 my_iterator & operator--();
                 my_iterator operator--( int );
-
+                
+                bool operator<(my_iterator& ) const;
             private:
                 Node<T> *current; 
-
+                friend class list<value_type>;
         };
 
 
@@ -164,7 +165,7 @@ namespace ls {
                 // TODO: Apenas para depuração
                 void print()
                 {
-                    auto current( this->head );
+                    auto current( this->m_head );
                     std::cout << "[ ";
 
                     // caso especial de lista vazia.
@@ -174,7 +175,7 @@ namespace ls {
                         // caso regular, lista com 1 ou mais elementos.
                         while( current != nullptr )
                         {
-                            std::cout << current->value << " ";
+                            std::cout << current->data << " ";
                             current = current->next;
                         }
                     }

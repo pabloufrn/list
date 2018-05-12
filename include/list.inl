@@ -90,26 +90,30 @@ inline my_iterator<T>::my_iterator( Node<my_iterator::value_type> * node ): curr
 template <typename T>
 inline typename my_iterator<T>::reference my_iterator<T>::operator*() const
 {
-    return this->current->value;
+    return this->current->data;
+}
+template <typename T>
+inline typename my_iterator<T>::reference my_iterator<T>::operator*()
+{
+    return this->current->data;
 }
 
 /// Operador de pré-incremento.
 template <typename T>
 my_iterator<T> & my_iterator<T>::operator++( )
 {
-    return my_iterator<T>(this);
+    this->current = this->current->next;
+    return *this;
 }
 
 /// Operador de pós-incremento.
 template <typename T>
 my_iterator<T> my_iterator<T>::operator++( int )
 {
+    auto old_current(this->current);
     this->current = this->current->next;
 
-    /* esse codigo, ao contrario de um codigo que guardaria current numa variavel
-     * temporária, obriga o algoritmo a lancar o segmetation fault.
-     * Caso não fizessimos assim estarimos apenas adiando o inevitavel.*/
-    return my_iterator<T>(this->current->prev);
+    return my_iterator<T>(old_current);
 }
 
 /// Operador de pré-decremento.
@@ -128,9 +132,18 @@ my_iterator<T> my_iterator<T>::operator--( int )
     return iterador(this->current->prev);
 }
 
-
-
-
+template <typename T>
+bool my_iterator<T>::operator<(my_iterator<T>& rhs) const
+{
+    auto curr(this->current);
+    while(curr != nullptr)
+    {
+        curr = curr->next;
+        if(curr == rhs.current)
+            return true;
+    }
+    return false;
+}
 
 // ####################### LIST #######################
 
@@ -141,7 +154,7 @@ my_iterator<T> my_iterator<T>::operator--( int )
 /// [I] SPECIAL MEMBERS
 
 template <typename T>
-list<T>::list(): m_head(nullptr), m_tail(nullptr), m_size(0) {}
+list<T>::list(): m_head(nullptr)/*, m_tail(nullptr), m_size(0)*/ {}
 
 template <typename T>
 list<T>::~list()
@@ -249,26 +262,26 @@ template <typename T>
 void list<T>::push_back( const T & value ) 
 {
     Node<T>* nd = new Node<T>();
-    nd->value = value;
-    nd->next = this->head;
+    nd->data = value;
+    nd->next = this->m_head;
     nd->prev = nullptr;
 
-    if(this->head)
-        this->head->prev = nd;
+    if(this->m_head)
+        this->m_head->prev = nd;
 
-    this->head = nd;
+    this->m_head = nd;
 }
 
 template <typename T>
 void list<T>::push_front( const T & value )
 {
     Node<T>* nd = new Node<T>();
-    nd->value = value;
+    nd->data = value;
     nd->next = nullptr;
 
-    if(this->head != nullptr)
+    if(this->m_head != nullptr)
     {
-        Node<T>* curr = this->head;
+        Node<T>* curr = this->m_head;
         while(curr->next != nullptr)
         {
             curr = curr->next;
@@ -278,7 +291,7 @@ void list<T>::push_front( const T & value )
     }
     else {
         nd->prev = nullptr;
-        this->head = nd;
+        this->m_head = nd;
     }
 }
 /*
@@ -292,7 +305,7 @@ void list<T>::push_front( const T & value )
     template <typename T>
 T& list<T>::at(list<T>::size_type & index)
 {
-    Node<T>* curr = this->head;
+    Node<T>* curr = this->m_head;
 
     if(curr == nullptr)
         throw std::out_of_range("Index provided is outside the array range.");
@@ -312,7 +325,7 @@ T& list<T>::at(list<T>::size_type & index)
 template <typename T>
 typename list<T>::iterator list<T>::begin()
 {
-    return list<T>::iterator(*this->head);
+    return list<T>::iterator(this->m_head);
 
 }
 /*
@@ -327,18 +340,42 @@ const_iterator end() const; // returns a constant iterator pointing to the end m
 /* : adds value into the
    list before the position given by the iterator pos . The method returns an iterator to the
    position of the inserted item.*/
-
-template < class InItr>
-typename list<typename InItr::value_type>::iterator insert(typename list<typename InItr::value_type>::iterator pos, InItr first, InItr last )
+//insert<ls::my_iterator<int> >(ls::my_iterator<int>, ls::my_iterator<int>, ls::my_iterator<int>)
+template < typename T >
+template < typename InItr >
+typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, InItr last )
 {
-    using T = typename InItr::value_type;
-    auto range_size = last - first; 
-    auto replace(pos + range_size);
-    auto new_node = Node<T>();
-    *(first).prev = pos->prev;
-    (*pos).prev->next = *first;
-    (*pos).prev = last;
-    (*last).next = pos;
+
+    /* O iterador 'InItr' é um iterador qualquer que desconhecemos o comportamento.
+     * O que temos que fazer é que os valores armazenados no itervalo possam ser acessiveis
+     * pela nossa list. Sabendo que o node usado dentro do intervalo pode ser incompativel
+     * com nosso node.
+     */
+   
+    // caso especial - inserção no começo ou lista vazia
+    auto old_pos(pos);
+    if(pos.current != nullptr)
+    {
+         pos = pos.current->prev;
+    }
+
+    auto inserted_pos(&pos);
+    // percorremos o range
+    Node<T> *new_node;
+
+    while(first < last)
+    {
+        new_node = new Node<T>(*first, pos.current);
+        pos.current->next = new_node;
+        
+        pos.current = pos.current->next;
+        first++;
+    }
+
+    old_pos.current->prev = new_node;
+    new_node->next = old_pos.current;
+    
+    return *inserted_pos;
 
 }
 //iterator insert( const_iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
@@ -393,24 +430,24 @@ typename list<typename InItr::value_type>::iterator insert(typename list<typenam
 
 
 
-   node* head;
+   node* m_head;
 
    list()
    {
-   head = nullptr;
+   m_head = nullptr;
    }
 
    void push_front(T value)
    {
    node* nd = new node;
    nd->value = value;
-   nd->next = this->head;
+   nd->next = this->m_head;
    nd->prev = nullptr;
 
-   if(this->head)
-   this->head->prev = nd;
+   if(this->m_head)
+   this->m_head->prev = nd;
 
-   this->head = nd;
+   this->m_head = nd;
 
    }
 
@@ -420,9 +457,9 @@ typename list<typename InItr::value_type>::iterator insert(typename list<typenam
    nd->value = value;
    nd->next = nullptr;
 
-   if(this->head)
+   if(this->m_head)
    {
-   node* curr = this->head;
+   node* curr = this->m_head;
    while(curr->next != nullptr)
    {
    curr = curr->next;
@@ -432,12 +469,12 @@ typename list<typename InItr::value_type>::iterator insert(typename list<typenam
    }
    else {
    nd->prev = nullptr;
-   this->head = nd;
+   this->m_head = nd;
    }
    }
    node & int index)
    {
-   node* curr = this->head;
+   node* curr = this->m_head;
 
    if(curr == nullptr)
    throw std::out_of_range("Index provided is outside the array range.");
@@ -451,7 +488,7 @@ typename list<typename InItr::value_type>::iterator insert(typename list<typenam
    return *curr;
    }
    void print(){
-   node* curr = this->head;
+   node* curr = this->m_head;
 
    while(curr != nullptr)
    {
