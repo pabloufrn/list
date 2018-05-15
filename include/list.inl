@@ -209,8 +209,6 @@ list<T>::list( const list<T> & other ){
     m_tail = current;
 }
 
-/*
-/// Seria no caso uma cópia do construtor da classe List?
 
 list<T>::list & operator=( const list<T> & other ){
 
@@ -220,13 +218,13 @@ list<T>::list & operator=( const list<T> & other ){
     m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
     m_head->prev = nullptr;
 
-    current(this->m_head);
-    other_perr(other);
+    auto current(this->m_head);
+    auto other_perr(other);
 
     for( auto i(0) ; i < this->m_size ; ++i ){
 
         Node<T> *new_node = new Node<T>();
-        new_node->data = other_perr->next->data;
+        new_node->data = other_perr->data;
         
         new_node->prev = current;
 
@@ -236,7 +234,7 @@ list<T>::list & operator=( const list<T> & other ){
         other_perr = other_perr->next;
     }
 
-    m_prev = current;
+    m_tail = current;
 
     return m_head;
 
