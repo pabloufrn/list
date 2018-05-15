@@ -53,24 +53,25 @@ int main(){
     list_a->print();
     std::cout << "\n";
 
-    list_b->push_front(4);
-    list_b->print();
-    std::cout << "\n";
-    list_b->push_front(5);
-    list_b->print();
-    std::cout << "\n";
-    list_b->push_front(6);
-    list_b->print();
-    std::cout << "\n";
-    auto first = ls::list<int>::iterator(list_b->begin());
-    auto last = ls::list<int>::iterator(list_b->begin());
-    ++last;
-    ++last;
+    *std_list_b = {4, 5, 6}; 
+ 
+    auto first = std_list_b->cbegin();
+    auto last = std_list_b->cend();
    // ++last;
     std::cout << "first: " << *first << " last: " << *last << std::endl;
     auto result = list_a->insert(++list_a->begin(), first , last);
     list_a->print();
     std::cout << " result: " << *result << std::endl;
+    std::cout << "begin : " << *list_a->begin() << std::endl;
+    result = list_a->insert(++list_a->begin(), 7);
+    list_a->print();
+    std::cout << " result: " << *result << std::endl;
+
+    
+   // result = list_a->insert(++list_a->begin(), {8, 9});
+   // list_a->print();
+    //std::cout << " result: " << *result << std::endl;
+
     /*
     assert(cmp(*av, *a_v) && "Error at push_front methode");
     

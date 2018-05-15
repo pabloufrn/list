@@ -181,7 +181,7 @@ list<T>::~list()
 
 /// Criando nova lista a partir de outra.
 /// Aqui foi feito desenho para entender o desenvolvimento.
-
+/*
 template < typename T >
 list<T>::list( const list<T> & other ){
     this->m_size = other.m_size;
@@ -190,13 +190,13 @@ list<T>::list( const list<T> & other ){
     m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
     m_head->prev = nullptr;
 
-    auto current(this->m_head);
-    auto other_perr(other);
+    current(this->m_head);
+    other_perr(other);
 
     for( auto i(0) ; i < this->m_size ; ++i ){
 
         Node<T> *new_node = new Node<T>();
-        new_node->data = other_perr->data;
+        new_node->data = other_perr->next->data;
         
         new_node->prev = current;
 
@@ -206,10 +206,11 @@ list<T>::list( const list<T> & other ){
         other_perr = other_perr->next;
     }
 
-    m_tail = current;
+    m_prev = current;
 }
-
-
+/**/
+/// Seria no caso uma cópia do construtor da classe List?
+/*
 list<T>::list & operator=( const list<T> & other ){
 
     this->m_size = other.m_size;
@@ -218,13 +219,13 @@ list<T>::list & operator=( const list<T> & other ){
     m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
     m_head->prev = nullptr;
 
-    auto current(this->m_head);
-    auto other_perr(other);
+    current(this->m_head);
+    other_perr(other);
 
     for( auto i(0) ; i < this->m_size ; ++i ){
 
         Node<T> *new_node = new Node<T>();
-        new_node->data = other_perr->data;
+        new_node->data = other_perr->next->data;
         
         new_node->prev = current;
 
@@ -234,28 +235,27 @@ list<T>::list & operator=( const list<T> & other ){
         other_perr = other_perr->next;
     }
 
-    m_tail = current;
+    m_prev = current;
 
     return m_head;
 
 }
-
+/**/
 /// [III] CAPACITY
 
 // returns true if the container contains no elements, and false otherwise.i*/
-template < typename T >
+/*
 bool list<T>::empty(){
     return m_size == 0;
 }
-
-
+/**/
 /// Common operations to all list implementations
 // return the number of elements in the container.
-template < typename T >
-typename list<T>::size_type list<T>::size() const{
+/*
+size_type list<T>::size() const{
     return m_size;
 }
-
+/**/
 void clear(); // remove (either logically or physically) all elements from the container.
 
 template <typename T>
@@ -294,78 +294,15 @@ void list<T>::push_front( const T & value )
         this->m_head = nd;
     }
 }
+/*
+   void pop_back(); //: removes the object at the end of the list.
+   void pop_front(); // : removes the object at the front of the list.
+   const T & back(); // const : returns the object at the end of the list.
+   const T & front();// const : returns the object at the beginning of the list.
+   void assign( const T & value ); // replaces the content of the list with copies of value value.
+   */
 
-template < typename T >
-void list<T>::pop_front(){
-    // obtem o m_head que é o primeiro elemento.
-    auto curr(m_head);
-
-    // obtem o segundo elemento da lista.
-    auto next(m_head->next);
-
-    // desreferencia o ponteiro que apontava para o primeiro item do segundo elemento.
-    next->prev = nullptr;
-
-    // atribui o novo inicio como o segundo elemento.
-    m_head = next;
-
-    // deleta o antigo primeiro elemento.
-    delete [] curr;
-
-
-}
-
-template < typename T >
-void list<T>::pop_back(){
-
-    // obtém o penultimo valor que deverá ser o novo m_tail.
-    auto penultimo(m_tail->prev);
-
-    // obtém o valor atual para m_tail.
-    auto ultimo(m_tail);
-
-    // desreferencia o next do antepenultimo elemento da lista.
-    penultimo->next = nullptr;
-
-    // atribui o novo m_tail ao penultimo.
-    m_tail = penultimo;
-
-    // exclui o antigo último elemento.
-    delete [] ultimo;
-
-}
-
-template < typename T >
-const T & list<T>::back() const{
-    return m_tail->data;
-}
-
-template < typename T >
-const T & list<T>::front() const{
-    return m_head->data;
-}
-
-template < typename T >
-void list<T>::assign( const T & value ){ // replaces the content of the list with copies of value value.
-
-    auto current(m_head);
-
-    if(m_head == nullptr){
-        std::cout << "A lista está vazia.\n";
-    } else{
-
-        while( current != nullptr){
-
-            current->data = value;
-
-            current = current->next;
-        }
-
-    }
-} 
-
-
-template < typename T >
+    template <typename T>
 T& list<T>::at(list<T>::size_type & index)
 {
     Node<T>* curr = this->m_head;
@@ -381,6 +318,9 @@ T& list<T>::at(list<T>::size_type & index)
     }
     return *curr;
 }
+/*
+/// Getting an iterator
+*/
 
 template <typename T>
 typename list<T>::iterator list<T>::begin()
@@ -405,7 +345,6 @@ template < typename T >
 template < typename InItr >
 typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, InItr last )
 {
-
     /* O iterador 'InItr' é um iterador qualquer que desconhecemos o comportamento.
      * O que temos que fazer é que os valores armazenados no itervalo possam ser acessiveis
      * pela nossa list. Sabendo que o node usado dentro do intervalo pode ser incompativel
@@ -417,11 +356,83 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, I
     if(pos.current != nullptr)
          pos = pos.current->prev;
 
+    /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
+     * elemento a ser inserido*/
     auto inserted_pos_before(pos);
-    inserted_pos_before.current->next = &(*pos.current->next);
+    inserted_pos_before.current->next = pos.current->next;
+
     // percorremos o range
     Node<T> *new_node;
 
+    auto size = std::distance(first, last);
+    /* não foi usado o while diretamente com ranges pois o iterator da lista do STL não tem
+     * o operador '<', e mesmo que existisse causaria perda de desempenho, visto que é necessário
+     * percorrer a lista inteira para encontrar um dos iteratores e determina se a posição é menor.
+     * Por um problema equivalente, não vale a pena usar o operador [], mesmo sabendo as posições.*/
+    for(auto i(0); i < size; i++)
+    {
+        new_node = new Node<T>(*first, pos.current);
+        pos.current->next = new_node;
+        
+        pos.current = pos.current->next;
+        first++;
+    }
+
+    old_pos.current->prev = new_node;
+    new_node->next = old_pos.current;
+
+    return ++inserted_pos_before; 
+}
+
+template < typename T >
+typename list<T>::iterator list<T>::insert(list<T>::iterator pos, const T & value)
+{
+    // cria o no a ser inserido
+    Node<T>* new_node = new Node<T>(value, pos.current->prev, pos.current);
+    // caso especial da lista vazia
+    if(pos.current == nullptr)
+    {
+        m_head = new_node;
+        m_tail = new_node;
+    }
+    // caso especial: inicio da lista
+    if(pos.current->prev == nullptr)
+    {
+        pos.current->prev = new_node;
+        m_head = new_node;
+    }
+    else
+    {
+        pos.current->prev->next = new_node;
+        pos.current->prev = new_node;
+    }
+    return new_node->next;
+}
+/*
+template < typename T >
+typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::initializer_list<T> ilist)
+{
+    // caso especial - inserção no começo ou lista vazia
+    auto old_pos(pos);
+    if(pos.current != nullptr)
+         pos = pos.current->prev;
+    /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
+     * elemento a ser inserido*/
+/*
+    auto inserted_pos_before(pos);
+    inserted_pos_before.current->next = pos.current->next;
+
+    // percorremos o range
+    Node<T> *new_node;
+
+    auto first = ilist.begin();
+    auto last = ilist.end();
+    /**/
+    /* não foi usado o while diretamente com ranges pois o iterator da lista do STL não tem
+     * o operador '<', e mesmo que existisse causaria perda de desempenho, visto que é necessário
+     * percorrer a lista inteira para encontrar um dos iteratores e determina se a posição é menor.
+     * Por um problema equivalente, não vale a pena usar o operador [], mesmo sabendo as posições.*/
+/*
     while(first < last)
     {
         new_node = new Node<T>(*first, pos.current);
@@ -433,10 +444,10 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, I
 
     old_pos.current->prev = new_node;
     new_node->next = old_pos.current;
-    
-    return ++inserted_pos_before; 
 
+    return ++inserted_pos_before;   
 }
+/**/
 //iterator insert( const_iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
 //                                                                  of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the ele-
 //                                                                  ments 1, 2, 3, and 4 in the list before pos , assuming that myList is a list of int .*/
