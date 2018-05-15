@@ -336,11 +336,17 @@ void list<T>::pop_back(){
 
 }
 
+template < typename T >
+const T & list<T>::back() const{
+    return m_tail->data;
+}
+
+template < typename T >
+const T & list<T>::front() const{
+    return m_head->data;
+}
+
 /*
-   void pop_back(); //: removes the object at the end of the list.
-   void pop_front(); // : removes the object at the front of the list.
-   const T & back(); // const : returns the object at the end of the list.
-   const T & front();// const : returns the object at the beginning of the list.
    void assign( const T & value ); // replaces the content of the list with copies of value value.
    */
 
