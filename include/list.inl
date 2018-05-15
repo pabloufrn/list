@@ -346,9 +346,25 @@ const T & list<T>::front() const{
     return m_head->data;
 }
 
-/*
-   void assign( const T & value ); // replaces the content of the list with copies of value value.
-   */
+template < typename T >
+void list<T>::assign( const T & value ){ // replaces the content of the list with copies of value value.
+
+    auto current(m_head);
+
+    if(m_head == nullptr){
+        std::cout << "A lista está vazia.\n";
+    } else{
+
+        while( current != nullptr){
+
+            current->data = value;
+
+            current = current->next;
+        }
+
+    }
+} 
+
 
 template < typename T >
 T& list<T>::at(list<T>::size_type & index)
@@ -366,9 +382,6 @@ T& list<T>::at(list<T>::size_type & index)
     }
     return *curr;
 }
-/*
-/// Getting an iterator
-*/
 
 template <typename T>
 typename list<T>::iterator list<T>::begin()
