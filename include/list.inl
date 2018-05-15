@@ -208,9 +208,9 @@ list<T>::list( const list<T> & other ){
 
     m_prev = current;
 }
-/**/
+
 /// Seria no caso uma cópia do construtor da classe List?
-/*
+
 list<T>::list & operator=( const list<T> & other ){
 
     this->m_size = other.m_size;
@@ -240,22 +240,23 @@ list<T>::list & operator=( const list<T> & other ){
     return m_head;
 
 }
-/**/
+
 /// [III] CAPACITY
 
 // returns true if the container contains no elements, and false otherwise.i*/
-/*
+template < typename T >
 bool list<T>::empty(){
     return m_size == 0;
 }
-/**/
+
+
 /// Common operations to all list implementations
 // return the number of elements in the container.
-/*
-size_type list<T>::size() const{
+template < typename T >
+typename list<T>::size_type list<T>::size() const{
     return m_size;
 }
-/**/
+
 void clear(); // remove (either logically or physically) all elements from the container.
 
 template <typename T>
@@ -294,6 +295,47 @@ void list<T>::push_front( const T & value )
         this->m_head = nd;
     }
 }
+
+template < typename T >
+void list<T>::pop_front(){
+    // obtem o m_head que é o primeiro elemento.
+    auto curr(m_head);
+
+    // obtem o segundo elemento da lista.
+    auto next(m_head->next);
+
+    // desreferencia o ponteiro que apontava para o primeiro item do segundo elemento.
+    next->prev = nullptr;
+
+    // atribui o novo inicio como o segundo elemento.
+    m_head = next;
+
+    // deleta o antigo primeiro elemento.
+    delete [] curr;
+
+
+}
+
+template < typename T >
+void list<T>::pop_back(){
+
+    // obtém o penultimo valor que deverá ser o novo m_tail.
+    auto penultimo(m_tail->prev);
+
+    // obtém o valor atual para m_tail.
+    auto ultimo(m_tail);
+
+    // desreferencia o next do antepenultimo elemento da lista.
+    penultimo->next = nullptr;
+
+    // atribui o novo m_tail ao penultimo.
+    m_tail = penultimo;
+
+    // exclui o antigo último elemento.
+    delete [] ultimo;
+
+}
+
 /*
    void pop_back(); //: removes the object at the end of the list.
    void pop_front(); // : removes the object at the front of the list.
@@ -302,7 +344,7 @@ void list<T>::push_front( const T & value )
    void assign( const T & value ); // replaces the content of the list with copies of value value.
    */
 
-    template <typename T>
+template < typename T >
 T& list<T>::at(list<T>::size_type & index)
 {
     Node<T>* curr = this->m_head;
