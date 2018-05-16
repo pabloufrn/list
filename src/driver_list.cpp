@@ -88,7 +88,7 @@ int main(){
     else
         std::cout << "NÃO" << std::endl; 
 
-    std::cout << " ================  TESTE DO POP_FRONT(), POP_BACK()  ================  ";
+    std::cout << "================  TESTE DO POP_FRONT(), POP_BACK()  ================  ";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     std::cout << "\nPOP_FRONT():";
@@ -101,11 +101,26 @@ int main(){
 
     
 
-    std::cout << " ====================  TESTE DO FRONT(), BACK()  ====================  ";
+    std::cout << "====================  TESTE DO FRONT(), BACK()  ====================  ";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     std::cout << " Front = " << valores.front() << "    Back = " << valores.back() << std::endl;
 
+    std::cout << "==============  TESTE DO ASSIGN(const T & value)  ==================  ";
+    std::cout << "\nLISTA ORIGINAL: ";
+    valores.print();
+    valores.assign(2);
+    std::cout << "\nLISTA MODIFICADA: ";
+    valores.print();
+    std::cout << "\n";
+
+    std::cout << "================== TESTE DO CLEAR() ======================";
+    std::cout << "\nLISTA ORIGINAL: ";
+    valores.print();
+    valores.clear();
+    std::cout << "\nLISTA DEPOIS DO CLEAR():";
+    valores.print();
+    std::cout << std::endl;
 
     
    // result = list_a->insert(++list_a->begin(), {8, 9});

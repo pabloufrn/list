@@ -269,7 +269,33 @@ typename list<T>::size_type list<T>::size() const{
     return m_size;
 }
 
-void clear(); // remove (either logically or physically) all elements from the container.
+// remove (either logically or physically) all elements from the container.
+template < typename T >
+void list<T>::clear(){
+    auto current(m_head->next);
+
+    if( current == m_tail ){
+        std::cout << "A lista está vazia.\n";
+    } else{
+
+        while(current != m_tail){
+
+            auto last (current);
+            current = current->next;
+
+            last->prev->next = current;
+            last->next->prev = last->prev;
+            last->next = nullptr;
+            last->prev = nullptr;
+
+            delete last;
+
+
+        }
+
+    }
+
+}
 
 template <typename T>
 void list<T>::push_back( const T & value ) 
@@ -329,15 +355,15 @@ void list<T>::push_front( const T & value )
 }
 
 template < typename T >
-void list<T>::assign( const T & value ){ // replaces the content of the list with copies of value value.
+void list<T>::assign( const T & value ){ // replaces the content of the list with copies of values.
 
-    auto current(m_head);
+    auto current(m_head->next);
 
-    if(m_head == nullptr){
+    if(m_head->next == m_tail ){
         std::cout << "A lista está vazia.\n";
     } else{
 
-        while( current != nullptr){
+        while( current != m_tail){
 
             current->data = value;
 
