@@ -154,12 +154,25 @@ bool my_iterator<T>::operator<(my_iterator<T>& rhs) const
 /// [I] SPECIAL MEMBERS
 
 template <typename T>
-list<T>::list() : m_size(0), m_head(nullptr) , m_tail(nullptr)  { /* empty */ }
+list<T>::list(){ 
+    m_size = 0;
+    Node<T> * h = new Node<T>();
+    Node<T> * t = new Node<T>();
+    
+    h->next = t;
+    h->prev = nullptr;
+    this->m_head = h;
+
+    t->prev = h;
+    t->next = nullptr;
+    this->m_tail = t;
+
+}
 
 template <typename T>
 list<T>::~list()
 {
-    auto curr(m_head);
+    /*auto curr(m_head);
     auto end_curr(m_tail);
     
     if(curr == nullptr && end_curr == nullptr)
@@ -176,7 +189,7 @@ list<T>::~list()
     while(end_curr != nullptr){
         end_curr = end_curr->prev;
         delete(end_curr->next);
-    }
+    }*/
 }
 
 /// Criando nova lista a partir de outra.
@@ -261,41 +274,58 @@ void clear(); // remove (either logically or physically) all elements from the c
 template <typename T>
 void list<T>::push_back( const T & value ) 
 {
-    Node<T>* nd = new Node<T>();
-    nd->data = value;
-    nd->prev = m_tail;
-    nd->next = nullptr;
+    Node<T> * new_node = new Node<T>();
+    new_node->data = value;
 
-    this->m_tail = nd;
+    // Se ainda não estiver nenhum elemento inserido.
+    if( m_tail->prev == m_head ){
+        // Faz link do elemento com o head e o tail.
+        new_node->next = m_tail;
+        new_node->prev = m_head;
 
-    // Aumenta o tamanho
-    m_size++;
+        // Link do head e do tail com o elemento.
+        m_head->next = new_node;
+        m_tail->prev = new_node;
+    }
+    else{
+        // Link do elemento com o head e o primeiro elemento da lista.
+        new_node->prev = m_tail->prev;
+        new_node->next = m_tail;
+
+        m_tail->prev->next = new_node;
+        m_tail->prev = new_node;
+    }
+    // Incrementa o tamanho.
+    m_size++;  
 }
 
 template <typename T>
 void list<T>::push_front( const T & value )
 {
-    Node<T>* nd = new Node<T>();
-    nd->data = value;
-    nd->next = nullptr;
+    Node<T> * new_node = new Node<T>();
+    new_node->data = value;
 
-    if(this->m_head != nullptr)
-    {
-        Node<T>* curr = this->m_head;
-        while(curr->next != nullptr)
-        {
-            curr = curr->next;
-        }
-        nd->prev = curr;
-        curr->next = nd;
-    }
-    else {
-        nd->prev = nullptr;
-        this->m_head = nd;
-    }
+    // Se ainda não estiver nenhum elemento inserido.
+    if( m_head->next == m_tail ){
+        // Faz link do elemento com o head e o tail.
+        new_node->next = m_tail;
+        new_node->prev = m_head;
 
-    // Aumenta o tamanho
+        // Link do head e do tail com o elemento.
+        m_head->next = new_node;
+        m_tail->prev = new_node;
+    }
+    else{
+        // Link do elemento com o head e o primeiro elemento da lista.
+        new_node->next = m_head->next;
+        new_node->prev = m_head;
+
+        m_head->next->prev = new_node;
+        m_head->next = new_node;
+    }
+    // Incrementa o tamanho.
     m_size++;
+
 }
 
 template < typename T >
@@ -319,37 +349,36 @@ void list<T>::assign( const T & value ){ // replaces the content of the list wit
 
 template < typename T >
 const T & list<T>::back() const{
-    return m_tail->data;
+    return m_tail->prev->data;
 }
 
 template < typename T >
 T & list<T>::back(){
-    return m_tail->data;
+    return m_tail->prev->data;
 }
 
 template < typename T >
 const T & list<T>::front() const{
-    return m_head->data;
+    return m_head->next->data;
 }
 
 template < typename T > 
 T & list<T>::front(){
-    return m_head->data;
+    return m_head->next->data;
 }
 
 template < typename T >
 void list<T>::pop_front(){
     // obtem o m_head que é o primeiro elemento.
-    auto curr(m_head);
+    auto curr(m_head->next);
 
     // obtem o segundo elemento da lista.
-    auto next(m_head->next);
+    auto next(curr->next);
 
-    // desreferencia o ponteiro que apontava para o primeiro item do segundo elemento.
-    next->prev = nullptr;
-
-    // atribui o novo inicio como o segundo elemento.
-    m_head = next;
+    // Liga o head com o segundo valor.
+    m_head->next = next;
+    // Liga o segundo valor com o next.
+    next->prev = m_head;
 
     // deleta o antigo primeiro elemento.
     delete curr;
@@ -363,16 +392,16 @@ template < typename T >
 void list<T>::pop_back(){
 
     // obtém o penultimo valor que deverá ser o novo m_tail.
-    auto penultimo(m_tail->prev);
+
+    auto penultimo(this->m_tail->prev->prev);
 
     // obtém o valor atual para m_tail.
-    auto ultimo(m_tail);
+    auto ultimo(this->m_tail->prev);
 
-    // desreferencia o next do penultimo elemento da lista.
-    penultimo->next = nullptr;
-
-    // atribui o novo m_tail ao penultimo.
-    m_tail = penultimo;
+    // liga o penultimo valor ao tail.
+    penultimo->next = m_tail;
+    // liga o tail com o penultimo valor.
+    m_tail->prev = penultimo;
 
     // exclui o antigo último elemento.
     delete ultimo;

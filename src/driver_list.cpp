@@ -32,7 +32,7 @@ int main(){
     
     // DEBUG
     
-    unique_ptr< ls::list<int> > list_a(new ls::list<int>);
+    /*unique_ptr< ls::list<int> > list_a(new ls::list<int>);
     unique_ptr< ls::list<int> > list_b(new ls::list<int>);
     unique_ptr< std::list<int> > std_list_a(new std::list<int>);
     unique_ptr< std::list<int> > std_list_b(new std::list<int>);
@@ -65,25 +65,28 @@ int main(){
     std::cout << "begin : " << *list_a->begin() << std::endl;
     result = list_a->insert(++list_a->begin(), 7);
     list_a->print();
-    std::cout << " result: " << *result << std::endl;
+    std::cout << " result: " << *result << std::endl;*/
 
 
-    /// =====================================    TESTES    ================================================  
+    /// =====================================    TESTES CORRETOS TODOS    ================================================  
     
     ls::list<int> valores;
-    valores.push_front(10);
+    std::cout << " ==============  TESTE DO push_front(), push_back()  =================  \n";
     valores.push_front(20);
-    valores.push_back(30);
+    valores.push_front(10);
     valores.push_back(40);
+    valores.push_back(30);
 
-    std::cout << "\n\nLISTA VALORES ORIGINAL = ";
+    std::cout << "LISTA VALORES ORIGINAL = ";
     valores.print();
     std::cout << std::endl;
 
-    std::cout << " ====================  TESTE DO SIZE(), EMPTY()  ====================  \n";
-    std::cout << "LISTA VALORES: ";
-    valores.print();
-    std::cout << " Quantidade: " << valores.size() << " Vazia? " << valores.empty() << std::endl; 
+    std::cout << "\n====================  TESTE DO SIZE(), EMPTY()  ====================  \n";
+    std::cout << " Quantidade: " << valores.size() << " Vazia? ";
+    if(valores.empty())
+        std::cout << "SIM" << std::endl;
+    else
+        std::cout << "NÃO" << std::endl; 
 
     std::cout << " ================  TESTE DO POP_FRONT(), POP_BACK()  ================  ";
     std::cout << "\nLISTA VALORES: ";
@@ -92,14 +95,16 @@ int main(){
     valores.pop_front();
     valores.print();
     std::cout << "\nPOP_BACK():";
+    valores.pop_back();
     valores.print();
     std::cout << std::endl;
 
+    
 
     std::cout << " ====================  TESTE DO FRONT(), BACK()  ====================  ";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
-    std::cout << " Front = " << valores.front() << "    Back = " << /*list_a->back() <<*/ std::endl;
+    std::cout << " Front = " << valores.front() << "    Back = " << valores.back() << std::endl;
 
 
     

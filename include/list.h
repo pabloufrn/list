@@ -167,15 +167,15 @@ namespace ls {
                 // TODO: Apenas para depuração
                 void print()
                 {
-                    auto current( this->m_head );
+                    auto current( this->m_head->next );
                     std::cout << "[ ";
 
                     // caso especial de lista vazia.
-                    if ( current == nullptr ) std::cout << "empty";
+                    if ( current->next == this->m_tail ) std::cout << "empty";
                     else
                     {
                         // caso regular, lista com 1 ou mais elementos.
-                        while( current != nullptr )
+                        while( current != this->m_tail )
                         {
                             std::cout << current->data << " ";
                             current = current->next;
