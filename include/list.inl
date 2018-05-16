@@ -632,7 +632,7 @@ T& list<T>::at(list<T>::size_type & index)
 template <typename T>
 typename list<T>::iterator list<T>::begin()
 {
-    return list<T>::iterator(this->m_head);
+    return list<T>::iterator(this->m_head->next);
 
 }
 /*
@@ -652,61 +652,40 @@ template < typename T >
 template < typename InItr >
 typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, InItr last )
 {
-    /* O iterador 'InItr' é um iterador qualquer que desconhecemos o comportamento.
+   /* O iterador 'InItr' é um iterador qualquer que desconhecemos o comportamento.
      * O que temos que fazer é que os valores armazenados no itervalo possam ser acessiveis
      * pela nossa list. Sabendo que o node usado dentro do intervalo pode ser incompativel
      * com nosso node.
      */
 
-    bool mudarTail = false;
-
-    if(pos.current->next == nullptr)
-        mudarTail = true;
-
-   
-    // caso especial - inserção no começo ou lista vazia
-    auto old_pos(pos);
-    if(pos.current != nullptr)
-         pos = pos.current->prev;
-
     /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
      * elemento a ser inserido*/
-    auto inserted_pos_before(pos);
+    auto inserted_pos_before(list<T>::iterator(pos.current->prev));
     inserted_pos_before.current->next = pos.current->next;
 
     // percorremos o range
     Node<T> *new_node;
 
     auto size = std::distance(first, last);
-
-    // Adiciona a quantidade de novos elementos no vetor.
-    m_size +=size;
-    
     /* não foi usado o while diretamente com ranges pois o iterator da lista do STL não tem
      * o operador '<', e mesmo que existisse causaria perda de desempenho, visto que é necessário
      * percorrer a lista inteira para encontrar um dos iteratores e determina se a posição é menor.
      * Por um problema equivalente, não vale a pena usar o operador [], mesmo sabendo as posições.*/
+     
+    auto current_node(pos.current->prev);
+   
     for(auto i(0); i < size; i++)
     {
-        new_node = new Node<T>(*first, pos.current);
-        pos.current->next = new_node;
-
-        if( mudarTail == true){
-            m_tail = new_node;
-        }
-        
-        pos.current = pos.current->next;
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
         first++;
     }
-
-    old_pos.current->prev = new_node;
-    new_node->next = old_pos.current;
-
-
     
+    current_node->next = pos.current;
+    pos.current->prev = current_node;
 
-
-    return ++inserted_pos_before; 
+    return inserted_pos_before.current->next;
 }
 
 template < typename T >
