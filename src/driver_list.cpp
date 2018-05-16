@@ -70,6 +70,12 @@ int main(){
 
     /// =====================================    TESTES CORRETOS TODOS    ================================================  
     
+    std::cout << "GERANDO LISTA COM NUMERAÇÃO\n";
+    ls::list<int> v1(10);
+    v1.print();
+    std::cout << std::endl;
+
+
     ls::list<int> valores;
     std::cout << " ==============  TESTE DO push_front(), push_back()  =================  \n";
     valores.push_front(20);
@@ -77,8 +83,45 @@ int main(){
     valores.push_back(40);
     valores.push_back(30);
 
-    std::cout << "LISTA VALORES ORIGINAL = ";
+    std::cout << "LISTA VALORES = ";
     valores.print();
+
+    std::cout << "\n==============  TESTE DO construtor a partir de outra lista  =================  \n";
+    ls::list<int> valores_copia(valores);
+    std::cout << "NOVA LISTA = ";
+    valores_copia.print();
+
+    std::cout << std::endl;
+
+    std::list<int> std_list_b = {4, 5, 6, 7, 8}; 
+ 
+    auto first_ = std_list_b.begin();
+    auto last_ = std_list_b.end();
+
+    std::cout << "GERANDO LISTA COM PONTEIROS\n";
+    ls::list<int> v2(first_, last_);
+    v2.print();
+    std::cout << std::endl;
+
+    std::cout << "GERANDO LISTA COM LISTA INICIALIZADORA\n";
+    ls::list<int> v3({2,3,4,5,6,7});
+    v3.print();
+    std::cout << std::endl;
+
+    std::cout << "GERANDO LISTA COM ATRIBUIÇÃO DE UMA LISTA INICIALIZADORA\n";
+    ls::list<int> v4;
+    v4 = {5,10,15,20,25};
+    v4.print();
+    std::cout << std::endl;
+
+    std::cout << "\n==============  TESTE DO operador de atribuição  =================  \n";
+    std::cout << "LISTA1 = ";
+    valores.print();
+    std::cout << std::endl;
+    ls::list<int> valores_atr;
+    valores_atr = valores;
+    std::cout << "LISTA ATRIBUIÇÃO = ";
+    valores_atr.print();
     std::cout << std::endl;
 
     std::cout << "\n====================  TESTE DO SIZE(), EMPTY()  ====================  \n";

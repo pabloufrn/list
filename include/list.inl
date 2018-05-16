@@ -169,88 +169,261 @@ list<T>::list(){
 
 }
 
+template < typename T >
+list<T>::list( list<T>::size_type count ){
+
+    m_size = count;
+    Node<T> * h = new Node<T>();
+    Node<T> * t = new Node<T>();
+    
+    h->next = t;
+    h->prev = nullptr;
+    this->m_head = h;
+
+    t->prev = h;
+    t->next = nullptr;
+    this->m_tail = t;
+
+    auto i(0u);
+
+    auto current(m_head);
+
+    while( i != count ){
+
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = 0;
+
+        // Conecta o novo node com os elementos de sua esquerda e direita.
+        new_node->prev = current;
+        new_node->next = m_tail;
+
+        // Reatribui os locais (next e prev) para o novo node.
+        current->next->prev = new_node;
+        current->next = new_node;
+
+        current = current->next;
+
+        i++;
+
+    }
+
+}
+
+template < typename T >
+template < typename InputIt >
+list<T>::list( InputIt first , InputIt last ){
+
+    auto qnt = std::distance(first, last);
+
+    m_size = qnt;
+    Node<T> * h = new Node<T>();
+    Node<T> * t = new Node<T>();
+    
+    h->next = t;
+    h->prev = nullptr;
+    this->m_head = h;
+
+    t->prev = h;
+    t->next = nullptr;
+    this->m_tail = t;
+
+    auto i(0u);
+
+    auto current(m_head);
+
+    while( i != qnt ){
+
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = *first;
+
+        // Conecta o novo node com os elementos de sua esquerda e direita.
+        new_node->prev = current;
+        new_node->next = m_tail;
+
+        // Reatribui os locais (next e prev) para o novo node.
+        current->next->prev = new_node;
+        current->next = new_node;
+
+        current = current->next;
+
+        i++;
+        first++;
+
+    }
+
+}
+
+template < typename T >
+list<T>::list( std::initializer_list<T> ilist ){
+
+    auto f = ilist.begin();
+
+    auto dist = ilist.size();
+
+    m_size = dist;
+
+    Node<T> * h = new Node<T>();
+    Node<T> * t = new Node<T>();
+    
+    h->next = t;
+    h->prev = nullptr;
+    this->m_head = h;
+
+    t->prev = h;
+    t->next = nullptr;
+    this->m_tail = t;
+
+    auto i(0u);
+
+    auto current(m_head);
+
+    while( i != dist ){
+
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = *f;
+
+        // Conecta o novo node com os elementos de sua esquerda e direita.
+        new_node->prev = current;
+        new_node->next = m_tail;
+
+        // Reatribui os locais (next e prev) para o novo node.
+        current->next->prev = new_node;
+        current->next = new_node;
+
+        current = current->next;
+
+        i++;
+        f++;
+
+    }
+
+}
+
+
+
 template <typename T>
 list<T>::~list()
 {
-    /*auto curr(m_head);
-    auto end_curr(m_tail);
-    
-    if(curr == nullptr && end_curr == nullptr)
-        return;
-
-    while(curr->next != nullptr)
-    {
-        curr = curr->next;
-        delete(curr->prev);
-    }
-
-    // É necessário fazer o do end_curr? Já que o curr percorre todo a lista?
-
-    while(end_curr != nullptr){
-        end_curr = end_curr->prev;
-        delete(end_curr->next);
-    }*/
+    clear();
+    delete m_head;
+    delete m_tail;
 }
 
 /// Criando nova lista a partir de outra.
 /// Aqui foi feito desenho para entender o desenvolvimento.
-
 template < typename T >
 list<T>::list( const list<T> & other ){
     this->m_size = other.m_size;
 
-    this->m_head = new Node<T>();
-    m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
-    m_head->prev = nullptr;
+    Node<T> * h = new Node<T>();
+    Node<T> * t = new Node<T>();
+    
+    h->next = t;
+    h->prev = nullptr;
+    this->m_head = h;
 
-    auto current(this->m_head);
-    auto other_perr(other);
+    t->prev = h;
+    t->next = nullptr;
+    this->m_tail = t;
+
+    auto current(m_head);
+
+    auto current_other(other.m_head);
+    current_other = current_other->next;
 
     for( auto i(0) ; i < this->m_size ; ++i ){
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = current_other->data;
 
-        Node<T> *new_node = new Node<T>();
-        new_node->data = other_perr->data;
-        
+        // Conecta o novo node com os elementos de sua esquerda e direita.
         new_node->prev = current;
+        new_node->next = m_tail;
 
+        // Reatribui os locais (next e prev) para o novo node.
+        current->next->prev = new_node;
         current->next = new_node;
-        
-        current = current->next;
-        other_perr = other_perr->next;
-    }
 
-    m_tail = current;
+        // Avança em ambas as listas.
+        current = current->next;
+        current_other = current_other->next;
+
+    }
 }
 
-/// Seria no caso uma cópia do construtor da classe List?
 template < typename T >
 list<T> & list<T>::operator=( const list<T> & other ){
 
     this->m_size = other.m_size;
 
-    this->m_head = new Node<T>();
-    m_head->data = other.m_head->data;      // ou other.(m_head->data) ?
-    m_head->prev = nullptr;
+    auto current(m_head);
 
-    auto current(this->m_head);
-    auto other_perr(other);
+
+    auto current_other(other.m_head);
+    current_other = current_other->next;
 
     for( auto i(0) ; i < this->m_size ; ++i ){
 
-        Node<T> *new_node = new Node<T>();
-        new_node->data = other_perr->data;
-        
-        new_node->prev = current;
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = current_other->data;
 
-        current->next = new_node;
-        
+        // Conecta o novo node com os elementos de sua esquerda e direita.
+        new_node->prev = current;
+        new_node->next = m_tail;
+
+        // Reatribui os locais (next e prev) para o novo node.
+        m_tail->prev->next = new_node;
+        m_tail->prev = new_node;
+
+        // Avança em ambas as listas.
         current = current->next;
-        other_perr = other_perr->next;
+        current_other = current_other->next;
+
     }
 
-    m_tail = current;
+    return *this;
+}
 
-    return m_head;
+template < typename T >
+list<T> & list<T>::operator=( std::initializer_list<T> ilist ){
+
+    auto f(ilist.begin());
+    this->m_size = ilist.size();
+
+    auto current(m_head);
+
+    for( auto i(0) ; i < this->m_size ; ++i ){
+
+        // Cria o novo node
+        Node<T> * new_node = new Node<T>();
+        // Atribui o valor que se encontra no node da posição desejada que se encontra na outra lista.
+        new_node->data = *f;
+
+        // Conecta o novo node com os elementos de sua esquerda e direita.
+        new_node->prev = current;
+        new_node->next = m_tail;
+
+        // Reatribui os locais (next e prev) para o novo node.
+        m_tail->prev->next = new_node;
+        m_tail->prev = new_node;
+
+        // Avança em ambas as listas.
+        current = current->next;
+
+        f++;
+
+    }
+
+    return *this;
 
 }
 
@@ -275,7 +448,7 @@ void list<T>::clear(){
     auto current(m_head->next);
 
     if( current == m_tail ){
-        std::cout << "A lista está vazia.\n";
+        std::cout << "[ empty ]\n";
     } else{
 
         while(current != m_tail){
