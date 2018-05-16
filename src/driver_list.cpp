@@ -71,6 +71,7 @@ int main(){
     /// =====================================    TESTES CORRETOS TODOS    ================================================  
     
     ls::list<int> valores;
+    std::list<int> lista_auxiliar = {1, 2, 3, 4};
     std::cout << " ==============  TESTE DO push_front(), push_back()  =================  \n";
     valores.push_front(20);
     valores.push_front(10);
@@ -105,6 +106,14 @@ int main(){
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     std::cout << " Front = " << valores.front() << "    Back = " << valores.back() << std::endl;
+    
+    std::cout << " =================== TESTE DO INSERT() - RANGES   ===================  ";
+    std::cout << "\nLISTA VALORES: ";
+    valores.print();
+    auto result = valores.insert(valores.begin(), lista_auxiliar.begin(), lista_auxiliar.end());
+    std::cout << "\nLISTA RESULTANTE: ";
+    valores.print();
+    std::cout << "\nRETORNO: " << *(result) << std::endl;
 
     std::cout << "==============  TESTE DO ASSIGN(const T & value)  ==================  ";
     std::cout << "\nLISTA ORIGINAL: ";
