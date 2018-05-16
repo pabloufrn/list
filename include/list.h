@@ -108,8 +108,8 @@ namespace ls {
                 list( const list& other );
                 list( std::initializer_list<T> ilist );
                 ~list();
-                list& operator=( const list& other );
-                list& operator=( std::initializer_list<T> ilist );
+                list<T> & operator=( const list<T> & other );
+                list<T> & operator=( std::initializer_list<T> ilist );
 
                 
                 /// [II] Iterators
@@ -128,6 +128,8 @@ namespace ls {
                 /// [IV] Modifies
                 void clear(); // remove (either logically or physically) all elements from the container.
                 const T & front() const;// const : returns the object at the beginning of the list.
+                T & front();
+                T & back();
                 const T & back() const; // const : returns the object at the end of the list.
                 void push_front( const T & value ); // : adds value to the front of the list.
                 void push_back( const T & value ); //: adds value to the end of the list.

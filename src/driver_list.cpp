@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
-#include "list.h"
+#include "../include/list.h"
 #include <list>
 
 using namespace std;
@@ -66,6 +66,41 @@ int main(){
     result = list_a->insert(++list_a->begin(), 7);
     list_a->print();
     std::cout << " result: " << *result << std::endl;
+
+
+    /// =====================================    TESTES    ================================================  
+    
+    ls::list<int> valores;
+    valores.push_front(10);
+    valores.push_front(20);
+    valores.push_back(30);
+    valores.push_back(40);
+
+    std::cout << "\n\nLISTA VALORES ORIGINAL = ";
+    valores.print();
+    std::cout << std::endl;
+
+    std::cout << " ====================  TESTE DO SIZE(), EMPTY()  ====================  \n";
+    std::cout << "LISTA VALORES: ";
+    valores.print();
+    std::cout << " Quantidade: " << valores.size() << " Vazia? " << valores.empty() << std::endl; 
+
+    std::cout << " ================  TESTE DO POP_FRONT(), POP_BACK()  ================  ";
+    std::cout << "\nLISTA VALORES: ";
+    valores.print();
+    std::cout << "\nPOP_FRONT():";
+    valores.pop_front();
+    valores.print();
+    std::cout << "\nPOP_BACK():";
+    valores.print();
+    std::cout << std::endl;
+
+
+    std::cout << " ====================  TESTE DO FRONT(), BACK()  ====================  ";
+    std::cout << "\nLISTA VALORES: ";
+    valores.print();
+    std::cout << " Front = " << valores.front() << "    Back = " << /*list_a->back() <<*/ std::endl;
+
 
     
    // result = list_a->insert(++list_a->begin(), {8, 9});
