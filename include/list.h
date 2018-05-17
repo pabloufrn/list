@@ -81,6 +81,8 @@ namespace ls {
                 my_iterator operator++( int );
                 my_iterator & operator--();
                 my_iterator operator--( int );
+
+                my_iterator operator+( int );
                 
                 bool operator<(my_iterator& ) const;
                 bool operator==( my_iterator & rhs ) const;

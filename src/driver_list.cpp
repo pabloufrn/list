@@ -174,6 +174,17 @@ int main(){
     valores.print();
     std::cout << std::endl;
 
+    std::cout << "================= TESTE DO ERASE(ITERATOR POS) =============\n";
+    std::cout << "Lista: ";
+    ls::list<int> e_1 = {1,2,3,4,5};
+    e_1.print();
+
+    auto valor = e_1.erase();
+    std::cout << "Após o erase();\n";
+    e_1.print();
+
+
+    std::cout << std::endl << "\n\n\n\n\nNão entendo pq está dando isso se não tem nada kkkk \n";
     /* ----------------------------------------------------------------------------------------------------- CRIAR OS PONTEIROS CONST
 
     std::cout << "================== TESTE DO OPERADOR==(LIST1, LIST2) ======================\nTESTE 1 - Listas:\n";

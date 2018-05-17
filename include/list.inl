@@ -123,13 +123,26 @@ my_iterator<T> & my_iterator<T>::operator--()
 {
     return list<T>::iterator(--my_iterator<T>(this));
 }
-/**/
+
 /// Operador de pós-decremento. 
 template <typename T>
 my_iterator<T> my_iterator<T>::operator--( int )
 {
     this->current = this->current->next;
     return list<T>::iterador(this->current->prev);
+}
+
+template <typename T>
+my_iterator<T> my_iterator<T>::operator+( int valor )
+{
+    
+    auto i(0);
+    while( i != valor){
+        this->current = this->current->next;
+        ++i;
+    }
+
+    return list<T>::iterador(this->current);
 }
 
 template <typename T>
@@ -798,6 +811,25 @@ typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::in
 //iterator insert( const_iterator pos, std::initializer_list<T>); ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
 //                                                                  of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the ele-
 //                                                                  ments 1, 2, 3, and 4 in the list before pos , assuming that myList is a list of int .*/
+
+template < typename T >
+typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
+
+    auto antes(pos.current->prev);
+    auto depois(pos.current->next);
+
+    pos.current->next = nullptr;
+    pos.current->prev = nullptr;
+
+    antes->next = depois;
+    depois->prev = antes;
+
+    delete pos.current;
+
+    return depois;
+
+}
+
 //iterator erase( iterator pos );/* : removes the object at position pos . The
 //                                  method returns an iterator to the element that follows pos before the call. This opera-
 //                                  tion invalidates pos , since the item it pointed to was removed from the list.
