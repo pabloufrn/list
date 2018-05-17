@@ -234,7 +234,7 @@ int main(){
     std::cout << "\n>>> Teste do insert(ilist)\n";
     std::cout << "ANTES: ";
     a_4.print();
-    a_4.insert(a_4.begin(), {13, 14, 15, 16});
+    a_4.insert(++a_4.begin(), {13, 14, 15, 16});
     std::cout << "\nDEPOIS: ";
     a_4.print();
     std::cout << "\n\n>>> Everything okay!\n";

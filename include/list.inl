@@ -76,22 +76,18 @@ bool my_const_iterator<T>::operator!=( const my_const_iterator<T> & rhs ) const
 
 // ####################### ITERATOR #######################
 
-
-
-
 template <typename T>
 inline my_iterator<T>::my_iterator( Node<my_iterator::value_type> * node ): current(node) 
 {
     /* empty */
 }
 
-/// Acessar o conteúdo o qual o ponteiro aponta.
-/// TODO: VERIFICAR SE ESTÁ IMPLEMENTAÇÃO ESTÁ CORRETA <--------------------
 template <typename T>
 inline typename my_iterator<T>::reference my_iterator<T>::operator*() const
 {
     return this->current->data;
 }
+
 template <typename T>
 inline typename my_iterator<T>::reference my_iterator<T>::operator*()
 {
@@ -103,7 +99,7 @@ template <typename T>
 my_iterator<T> & my_iterator<T>::operator++( )
 {
     this->current = this->current->next;
-    return list<T>::iterator(*this);
+    return *this;
 }
 
 /// Operador de pós-incremento.
@@ -112,8 +108,8 @@ my_iterator<T> my_iterator<T>::operator++( int )
 {
     auto old_current(this->current);
     this->current = this->current->next;
-
-    return list<T>::iterator(my_iterator<T>(old_current));
+    
+    return my_iterator<T>(old_current);
 }
 
 /// Operador de pré-decremento.
@@ -121,15 +117,17 @@ my_iterator<T> my_iterator<T>::operator++( int )
 template <typename T>
 my_iterator<T> & my_iterator<T>::operator--()
 {
-    return list<T>::iterator(--my_iterator<T>(this));
+    this->current = this->current->prev;
+    return *this;
 }
 
 /// Operador de pós-decremento. 
 template <typename T>
 my_iterator<T> my_iterator<T>::operator--( int )
 {
-    this->current = this->current->next;
-    return list<T>::iterador(this->current->prev);
+    auto old_current(this->current);
+    this->current = this->current->prev;
+    return list<T>::iterador(old_current);
 }
 
 template <typename T>
@@ -171,13 +169,10 @@ bool my_iterator<T>::operator!=(my_iterator<T>& rhs) const{
 // ####################### LIST #######################
 
 
-
-
-
 /// [I] SPECIAL MEMBERS
 
 template <typename T>
-list<T>::list(){ 
+list<T>::list(){
     m_size = 0;
     Node<T> * h = new Node<T>();
     Node<T> * t = new Node<T>();
@@ -328,8 +323,6 @@ list<T>::list( std::initializer_list<T> ilist ){
 
 }
 
-
-
 template <typename T>
 list<T>::~list()
 {
@@ -470,7 +463,6 @@ template < typename T >
 void list<T>::clear(){
     auto current(m_head->next);
 
-    
     while(current != m_tail){
 
         auto last (current);
@@ -672,19 +664,8 @@ typename list<T>::const_iterator list<T>::cend() const{
     return list<T>::const_iterator(this->m_tail);
 }
 
-/*
-const_iterator begin() const; // returns a constant iterator pointing to the first item in the list.
-iterator end();// : returns an iterator pointing to the end mark in the list, i.e. the position just after the last element of the list.
-const_iterator end() const; // returns a constant iterator pointing to the end mark in the list, i.e. the position just after the last element of the list.
-*/
-///
+
 // List container operations that require iterators
-//TODO: fazer para const iterator
-//iterator insert( iterator pos, const T & value );
-/* : adds value into the
-   list before the position given by the iterator pos . The method returns an iterator to the
-   position of the inserted item.*/
-//insert<ls::my_iterator<int> >(ls::my_iterator<int>, ls::my_iterator<int>, ls::my_iterator<int>)
 template < typename T >
 template < typename InItr >
 typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, InItr last )
@@ -756,9 +737,6 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, const T & valu
         pos.current->prev = new_node;
     }
 
-
-
-
     return new_node->next;
 }
 
@@ -794,10 +772,6 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos,  std::initiali
 
     return list<T>::iterator(inserted_pos_before.current->next);
 }
-
-//iterator insert( const_iterator pos, std::initializer_list<T>); ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
-//                                                                  of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the ele-
-//                                                                  ments 1, 2, 3, and 4 in the list before pos , assuming that myList is a list of int .*/
 
 template < typename T >
 typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
@@ -913,40 +887,6 @@ void list<T>::assign( std::initializer_list<T> ilist )
 
     return;
 }
-//template < typename InItr>
-//
-//void assign( InItr first, InItr last );/* : replaces the contents of the list with
-//                                          copies of the elements in the range [first; last) .
-//                                          */
-//template < typename InItr>
-//void assign( std::initializer_list<T> ilist );/*replaces the contents of
-//                                                the list with the elements from the initializer list ilist .
-//                                                We may call, for instance, myList.assign( {1, 2, 3, 4} ) , to replace the elements
-//                                                of the list with the elements 1, 2, 3, and 4, assuming that myList is a list of int .
-//                                                */
-//
-///// Operator overloading — non-member functions
-//template<typename T>
-//bool operator==( const list<T>& lhs, const list<T>& rhs );  /*Checks if
-//                                                              the contents of lhs and rhs are equal, that is, whether lhs.size() == rhs.size()
-//                                                              and each element in lhs compares equal with the element in rhs at the same position.*/
-//template<typename T>
-//bool operator!=( const list<T>& lhs, const list<T>& rhs ); /*Similar to the
-//                                                             previous operator, but the opposite result.*/
-//
-//
-//
-//
-//
-//
-//
-//
-//
-///**/
-//// Operador de diferença entre ponteiros.
-///*
-//   difference_type operator-( const MyIterator & rhs ) const;
-///**/
 
 template < typename T >
 typename list<T>::iterator list<T>::find( list<T>::iterator pos, const T & target ) const{
