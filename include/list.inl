@@ -637,10 +637,21 @@ typename list<T>::iterator list<T>::begin()
 
 }
 
+template < typename T >
+typename list<T>::const_iterator list<T>::cbegin() const{
+    return list<T>::const_iterator(this->m_head->next);
+}
+
 
 template < typename T >
 typename list<T>::iterator list<T>::end(){
-    return list<T>::iterator(this->m_tail->prev);
+    return list<T>::iterator(this->m_tail);
+}
+
+
+template < typename T >
+typename list<T>::const_iterator list<T>::cend() const{
+    return list<T>::const_iterator(this->m_tail);
 }
 
 /*
