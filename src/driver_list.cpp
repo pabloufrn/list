@@ -179,12 +179,20 @@ int main(){
     ls::list<int> e_1 = {1,2,3,4,5};
     e_1.print();
 
-    auto valor = e_1.erase();
     std::cout << "Após o erase();\n";
+    auto valor = e_1.erase(e_1.begin());
     e_1.print();
 
 
     std::cout << std::endl << "\n\n\n\n\nNão entendo pq está dando isso se não tem nada kkkk \n";
+    
+    std::cout << ">>> Teste do find()\n";
+    ls::list<int> f_1 = {5,10,15,20,25,30};
+    auto pos = f_1.find(15);
+    //auto v = *pos;
+    //std::cout << "Valor: " << v;     //<- Falha de Segmentação
+    std::cout << std::endl;
+
     /* ----------------------------------------------------------------------------------------------------- CRIAR OS PONTEIROS CONST
 
     std::cout << "================== TESTE DO OPERADOR==(LIST1, LIST2) ======================\nTESTE 1 - Listas:\n";

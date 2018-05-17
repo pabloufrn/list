@@ -164,6 +164,7 @@ namespace ls {
                                                                    range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                                                                    */ 
                 const_iterator find( const T & value ) const;
+                const_iterator find( iterator pos, const T & value ) const;
 
                 // [V] Acess Operators
                 reference at(size_type & index);

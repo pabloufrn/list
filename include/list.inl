@@ -20,7 +20,7 @@ inline my_const_iterator<T>::my_const_iterator(Node<my_const_iterator::value_typ
 template <typename T>
 typename my_const_iterator<T>::const_reference & my_const_iterator<T>::operator*() const
 {
-    return this->current->value;
+    return this->current->data;
 }
 
 /// Operador de pré-incremento.
@@ -873,3 +873,39 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
 ///*
 //   difference_type operator-( const MyIterator & rhs ) const;
 ///**/
+
+template < typename T >
+typename list<T>::const_iterator list<T>::find( list<T>::iterator pos, const T & target ) const{
+
+    auto prev( pos.current );
+    auto current( pos.current->next );
+
+    if( current != m_tail ){
+        while( current != m_tail and current->data != target ){
+            prev = current;
+            current = current->next;
+        }
+    }
+
+
+    return list<T>::iterator(prev);
+
+}
+
+template < typename T >
+typename list<T>::const_iterator list<T>::find( const T & target ) const{
+
+    auto prev( m_head );
+    auto current( m_head->next );
+
+    if( current != m_tail ){
+        while( current != m_tail and current->data != target ){
+            std::cout << "T\n";
+            prev = current;
+            current = current->next;
+        }
+    }
+
+    return list<T>::iterator(prev);
+
+}
