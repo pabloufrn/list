@@ -16,19 +16,26 @@ Com o passo de compilação já realizado, você poderá executar o código com 
 
 # Implementação:
 
-O vector é um container de dados que armazena em sua estrutura um vetor (ponteiro) de tipos de dados especificados pelo cliente. O vetor possui métodos de inserção, acesso a elementos, verificação de capacidade, operadores e iteradores. Todos os métodos utilizados estão descritos na documententação.
 
 # Distribuição de pastas e arquivos
 
 pasta doc: ficarão todos os arquivos de documentação gerados pelo Doxygen.
+
 pasta src: ficarão os códigos-fonte do projeto em c++ que conterá um arquivo:
+
 driver_list.cpp: arquivo responsável pela implementação do código do cliente.
 pasta bin: ficarão os executáveis gerados pelo Makefile (Essa pasta é criada após usar o comando make).
+
 pasta build: ficarão os arquivos de código objeto gerados pelo Makefile (Essa pasta é criada após usar o comando make).
+
 pasta include: ficarão os dois arquivos que contém a implementação do list, que são:
+
 list.h: armazena todas as assinaturas e definições que serão usadas pela nossa TAD.
+
 list.inl: arquivo que implementa tudo que está descrito no list.h.
+
 arquivo exec: link simbólico para executável gerado pelo comando make.
+
 arquivo Makefile: arquivo usado pelo comando make para gerar o arquivo binário do projeto.
 
 # Authorship
