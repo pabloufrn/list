@@ -191,14 +191,57 @@ namespace ls {
 
 
         }; 
+
     /// Operator overloading — non-member functions
-    template<typename T>
-        bool operator==( const list<T>& lhs, const list<T>& rhs );  /*Checks if
-                                                                      the contents of lhs and rhs are equal, that is, whether lhs.size() == rhs.size()
-                                                                      and each element in lhs compares equal with the element in rhs at the same position.*/
-    template<typename T>
-        bool operator!=( const list<T>& lhs, const list<T>& rhs ); /*Similar to the
-                                                                     previous operator, but the opposite result.*/
+
+    /*Checks if the contents of lhs and rhs are equal, that is, whether lhs.size() == rhs.size() 
+    and each element in lhs compares equal with the element in rhs at the same position.*/
+
+    template < typename T >
+    bool operator==( const list<T>& lhs, const list<T>& rhs ){
+
+        if( lhs.size() != rhs.size() )
+            return false;
+
+        auto l = lhs.begin();
+        auto r = rhs.begin();
+
+        for( auto i(0u); i < lhs.size() ; ++i){
+
+            if(*l != *r)
+                return false;
+
+            l++;
+            r++;
+
+        }
+
+        return true;
+
+    }
+
+    /*Similar to the previous operator, but the opposite result.*/
+    template < typename T >
+    bool operator!=( const list<T>& lhs, const list<T>& rhs ){
+    if( lhs.size() != rhs.size() )
+            return true;
+
+        auto l = lhs.begin();
+        auto r = rhs.begin();
+
+        for( auto i(0u); i < lhs.size() ; ++i){
+
+            if(*l != *r)
+                return true;
+
+            l++;
+            r++;
+
+        }
+
+        return false;
+
+    }
 }
 
 #include "list.inl"

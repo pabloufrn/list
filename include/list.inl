@@ -609,6 +609,7 @@ void list<T>::pop_back(){
 
 }
 
+
 template <typename T>
 T& list<T>::at(list<T>::size_type & index)
 {
@@ -635,6 +636,13 @@ typename list<T>::iterator list<T>::begin()
     return list<T>::iterator(this->m_head->next);
 
 }
+
+
+template < typename T >
+typename list<T>::iterator list<T>::end(){
+    return list<T>::iterator(this->m_tail->prev);
+}
+
 /*
 const_iterator begin() const; // returns a constant iterator pointing to the first item in the list.
 iterator end();// : returns an iterator pointing to the end mark in the list, i.e. the position just after the last element of the list.
@@ -724,6 +732,8 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, const T & valu
 
     return new_node->next;
 }
+
+
 /*
 template < typename T >
 typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::initializer_list<T> ilist)
@@ -810,94 +820,3 @@ typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::in
 ///*
 //   difference_type operator-( const MyIterator & rhs ) const;
 ///**/
-
-
-/*
-
-
-
-   node* m_head;
-
-   list()
-   {
-   m_head = nullptr;
-   }
-
-   void push_front(T value)
-   {
-   node* nd = new node;
-   nd->value = value;
-   nd->next = this->m_head;
-   nd->prev = nullptr;
-
-   if(this->m_head)
-   this->m_head->prev = nd;
-
-   this->m_head = nd;
-
-   }
-
-   void push_back(T value)
-   {
-   node* nd = new node;
-   nd->value = value;
-   nd->next = nullptr;
-
-   if(this->m_head)
-   {
-   node* curr = this->m_head;
-   while(curr->next != nullptr)
-   {
-   curr = curr->next;
-   }
-   nd->prev = curr;
-   curr->next = nd;
-   }
-   else {
-   nd->prev = nullptr;
-   this->m_head = nd;
-   }
-   }
-   node & int index)
-   {
-   node* curr = this->m_head;
-
-   if(curr == nullptr)
-   throw std::out_of_range("Index provided is outside the array range.");
-
-   for(int i = 0; i < index; ++i)
-   {
-   if(curr == nullptr)
-   throw std::out_of_range("Index provided is outside the array range.");
-   curr = curr->next;
-   }
-   return *curr;
-   }
-   void print(){
-   node* curr = this->m_head;
-
-   while(curr != nullptr)
-   {
-   cout << curr->value << " ";
-   curr = curr->next;
-   }
-   cout << "\n";
-   }
-
-};
-
-
-int main()
-{
-    list<int> mylist;
-
-    mylist.push_front(2);
-    mylist.push_front(1);
-    mylist.push_back(3);
-    cout << "pos 1: " << mylist.1).value << "\n";
-    mylist.print();
-}
-
-
-
-*/
