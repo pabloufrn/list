@@ -763,44 +763,36 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, const T & valu
 }
 
 
-/*
+
 template < typename T >
-typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::initializer_list<T> ilist)
+typename list<T>::iterator list<T>::insert(list<T>::iterator pos,  std::initializer_list<T> ilist)
 {
-    // caso especial - inserção no começo ou lista vazia
-    auto old_pos(pos);
-    if(pos.current != nullptr)
-         pos = pos.current->prev;
-     guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
-      elemento a ser inserido*/
-/*
-    auto inserted_pos_before(pos);
+    /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
+     * elemento a ser inserido*/
+    auto inserted_pos_before(list<T>::iterator(pos.current->prev));
     inserted_pos_before.current->next = pos.current->next;
 
     // percorremos o range
     Node<T> *new_node;
-
-    auto first = ilist.begin();
-    auto last = ilist.end();
     
-     * não foi usado o while diretamente com ranges pois o iterator da lista do STL não tem
-     * o operador '<', e mesmo que existisse causaria perda de desempenho, visto que é necessário
-     * percorrer a lista inteira para encontrar um dos iteratores e determina se a posição é menor.
-     * Por um problema equivalente, não vale a pena usar o operador [], mesmo sabendo as posições.*/
-/*
-    while(first < last)
+    auto first = ilist.begin();
+
+    auto size = std::distance(first, ilist.end());
+     
+    auto current_node(pos.current->prev);
+   
+    for(auto i(0); i < size; i++)
     {
-        new_node = new Node<T>(*first, pos.current);
-        pos.current->next = new_node;
-        
-        pos.current = pos.current->next;
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
         first++;
     }
+    
+    current_node->next = pos.current;
+    pos.current->prev = current_node;
 
-    old_pos.current->prev = new_node;
-    new_node->next = old_pos.current;
-
-    return ++inserted_pos_before;   
+    return list<T>::iterator(inserted_pos_before.current->next);
 }
 
 //iterator insert( const_iterator pos, std::initializer_list<T>); ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
@@ -853,8 +845,74 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator first, list<T>::ite
 
 }
 
-//void assign( size_type count, const T& value );/* : Replaces the contents
-//*/
+template < typename T >
+void list<T>::assign( list<T>::size_type count, const T& value )
+{
+    this->clear();
+    m_size = count;
+    
+    Node<T>* new_node; 
+    Node<T>* prev_node = m_head;
+    
+    for(auto i(0u); i < count; ++i)
+    {
+        new_node = new Node<T>(value, prev_node, nullptr);
+        prev_node->next = new_node;
+        prev_node = new_node;
+    }
+    new_node->next = m_tail;
+    m_tail->prev = new_node;
+    return;
+    
+}
+
+template < typename T>
+template < typename InItr>
+void list<T>::assign( InItr first, InItr last )
+{
+    this->clear();
+    
+    Node<T> *new_node;
+    m_size = std::distance(first, last);
+    auto current_node(m_head);
+   
+    for(auto i(0); i < m_size; i++)
+    {
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
+        first++;
+    }
+    
+    current_node->next = m_tail;
+    m_tail->prev = current_node;
+
+    return;
+}
+
+template < typename T>
+void list<T>::assign( std::initializer_list<T> ilist ) 
+{
+    this->clear();
+    
+    Node<T> *new_node;
+    auto first = ilist.begin();
+    m_size = std::distance(first, ilist.end());
+    auto current_node(m_head);
+   
+    for(auto i(0); i < m_size; i++)
+    {
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
+        first++;
+    }
+    
+    current_node->next = m_tail;
+    m_tail->prev = current_node;
+
+    return;
+}
 //template < typename InItr>
 //
 //void assign( InItr first, InItr last );/* : replaces the contents of the list with

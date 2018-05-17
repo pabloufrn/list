@@ -140,13 +140,12 @@ namespace ls {
                 void pop_front(); // : removes the object at the front of the list.
                 void pop_back(); //: removes the object at the end of the list.
                 void assign( const T & value ); // replaces the content of the list with copies of value value.
-
+                void assign( size_type count, const T& value ); //  Replaces the contents with count copies of value value.
                 /// [IV-a] Modifies with iterators
                 template < typename InItr>
                 void assign( InItr first, InItr last );/* : replaces the contents of the list with
                                                               copies of the elements in the range [first; last) .
                                                               */
-                template < typename InItr>
                 void assign( std::initializer_list<T> ilist );/*replaces the contents of
                                                                     the list with the elements from the initializer list ilist .
                                                                     We may call, for instance, myList.assign( {1, 2, 3, 4} ) , to replace the elements
@@ -156,7 +155,7 @@ namespace ls {
                 iterator insert(iterator pos,   const T & value);
                 template < typename InItr >
                 iterator insert( iterator pos, InItr first, InItr last);
-                iterator insert( const_iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
+                iterator insert( iterator pos, std::initializer_list<T>);/* ilistinserts elements from the initializer list ilist before pos . Initializer list supports the user
                                                                                   of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the ele-
                                                                                   ments 1, 2, 3, and 4 in the list before pos , assuming that myList is a list of int .*/
                 iterator erase( iterator pos );
@@ -176,7 +175,7 @@ namespace ls {
                     std::cout << "[ ";
 
                     // caso especial de lista vazia.
-                    if ( current->next == this->m_tail ) std::cout << "empty";
+                    if ( current == this->m_tail ) std::cout << "empty";
                     else
                     {
                         // caso regular, lista com 1 ou mais elementos.

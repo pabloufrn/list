@@ -204,10 +204,40 @@ int main(){
     e_2.erase(e_2.begin()+5,e_2.begin()+8);
     std::cout << "\nDEPOIS: ";
     e_2.print();
-
+    
+    
+    std::cout << "\n>>> Teste do assign(count, value)\n";
+    ls::list<int> a_2 = {2,3,4,5,6,7,8,9,10,11,12,13,14};
+    std::cout << "ANTES: ";
+    a_2.print();
+    a_2.assign((size_t) 3, 9);
+    std::cout << "\nDEPOIS: ";
+    a_2.print();
+    
+    std::cout << "\n>>> Teste do assign(InItr, InItr)\n";
+    ls::list<int> a_3 = {5,6,7,8,9,10,11,12,13,14};
+    std::cout << "ANTES: ";
+    a_3.print();
+    a_3.assign(lista_auxiliar.begin(), lista_auxiliar.end());
+    std::cout << "\nDEPOIS: ";
+    a_3.print();
+    
+    std::cout << "\n>>> Teste do assign(ilist)\n";
+    ls::list<int> a_4 = {5,6,7,8};
+    std::cout << "ANTES: ";
+    a_4.print();
+    a_4.assign({9, 10, 11, 12});
+    std::cout << "\nDEPOIS: ";
+    a_4.print();
     std::cout << "\n\n>>> Everything okay!\n";
 
-
+    std::cout << "\n>>> Teste do insert(ilist)\n";
+    std::cout << "ANTES: ";
+    a_4.print();
+    a_4.insert(a_4.begin(), {13, 14, 15, 16});
+    std::cout << "\nDEPOIS: ";
+    a_4.print();
+    std::cout << "\n\n>>> Everything okay!\n";
 
     
 
