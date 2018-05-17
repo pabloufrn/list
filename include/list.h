@@ -83,6 +83,8 @@ namespace ls {
                 my_iterator operator--( int );
                 
                 bool operator<(my_iterator& ) const;
+                bool operator==( my_iterator & rhs ) const;
+                bool operator!=(  my_iterator & rhs ) const;
             private:
                 Node<T> *current; 
                 friend class list<value_type>;

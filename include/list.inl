@@ -22,13 +22,13 @@ typename my_const_iterator<T>::const_reference & my_const_iterator<T>::operator*
 {
     return this->current->value;
 }
-/**/
+
 /// Operador de pré-incremento.
 template <typename T>
 my_const_iterator<T> & my_const_iterator<T>::operator++( )
 {
     this->current = this->current->next;
-    return list<T>::iterator(*this->current);
+    return list<T>::const_iterator(*this->current);
 }
 
 /// Operador de pós-incremento.
@@ -36,7 +36,7 @@ template <typename T>
 my_const_iterator<T> my_const_iterator<T>::operator++( int )
 {
     this->current = this->current->next;
-    return MyIterator(this->current->prev);
+    return list<T>::const_iterator(this->current->prev);
 }
 
 /// Operador de pré-decremento.
@@ -45,7 +45,7 @@ template <typename T>
 my_const_iterator<T> & my_const_iterator<T>::operator--()
 {
     this->current = this->current->prev;
-    return this->current;
+    return list<T>::const_iterator(this->current);
 }
 /**/
 /// Operador de pós-decremento. 
@@ -53,7 +53,7 @@ template <typename T>
 my_const_iterator<T> my_const_iterator<T>::operator--( int )
 {
     this->current = this->current->prev;
-    return this->current->next;
+    return list<T>::const_iterator(this->current->next);
 }
 
 /// Comparar dois iteradores se são iguais.
@@ -103,7 +103,7 @@ template <typename T>
 my_iterator<T> & my_iterator<T>::operator++( )
 {
     this->current = this->current->next;
-    return *this;
+    return list<T>::iterator(*this);
 }
 
 /// Operador de pós-incremento.
@@ -113,7 +113,7 @@ my_iterator<T> my_iterator<T>::operator++( int )
     auto old_current(this->current);
     this->current = this->current->next;
 
-    return my_iterator<T>(old_current);
+    return list<T>::iterator(my_iterator<T>(old_current));
 }
 
 /// Operador de pré-decremento.
@@ -121,7 +121,7 @@ my_iterator<T> my_iterator<T>::operator++( int )
 template <typename T>
 my_iterator<T> & my_iterator<T>::operator--()
 {
-    return --my_iterator<T>(this);
+    return list<T>::iterator(--my_iterator<T>(this));
 }
 /**/
 /// Operador de pós-decremento. 
@@ -129,7 +129,7 @@ template <typename T>
 my_iterator<T> my_iterator<T>::operator--( int )
 {
     this->current = this->current->next;
-    return iterador(this->current->prev);
+    return list<T>::iterador(this->current->prev);
 }
 
 template <typename T>
@@ -143,6 +143,16 @@ bool my_iterator<T>::operator<(my_iterator<T>& rhs) const
             return true;
     }
     return false;
+}
+
+template < typename T >
+bool my_iterator<T>::operator==(my_iterator<T>& rhs) const{
+    return this->current == rhs.current;
+}
+
+template < typename T >
+bool my_iterator<T>::operator!=(my_iterator<T>& rhs) const{
+    return this->current != rhs.current;
 }
 
 // ####################### LIST #######################
