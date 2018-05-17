@@ -196,9 +196,18 @@ int main(){
     std::cout << "Valor: " << *pos2;
     std::cout << std::endl;
 
-    std::cout << "\n>>> Everything okay!\n";
 
-    
+    std::cout << "\n>>> Teste do erase(ponteiro, ponteiro)\n";
+    ls::list<int> e_2 = {2,3,4,5,6,7,8,9,10,11,12,13,14};
+    std::cout << "ANTES: ";
+    e_2.print();
+    e_2.erase(e_2.begin()+5,e_2.begin()+8);
+    std::cout << "\nDEPOIS: ";
+    e_2.print();
+
+    std::cout << "\n\n>>> Everything okay!\n";
+
+
 
     
 

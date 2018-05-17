@@ -825,13 +825,34 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
 
 }
 
-//iterator erase( iterator pos );/* : removes the object at position pos . The
-//                                  method returns an iterator to the element that follows pos before the call. This opera-
-//                                  tion invalidates pos , since the item it pointed to was removed from the list.
-//                                  */
-//iterator erase( iterator first, iterator last );/* : removes elements in the
-//                                                   range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
-//                                                   */ 
+template < typename T >
+typename list<T>::iterator list<T>::erase( list<T>::iterator first, list<T>::iterator last ){
+
+    auto f(first.current);
+    auto pos(f->prev);
+
+    auto l(last.current);
+
+    while(f != l){
+
+        auto next_ = f->next;
+
+        f->prev->next = f->next;
+        f->next->prev = f->prev;
+
+        f->next = nullptr;
+        f->prev = nullptr;
+
+        delete f;
+
+        f = next_;
+
+    }
+
+    return pos->next;
+
+}
+
 //void assign( size_type count, const T& value );/* : Replaces the contents
 //*/
 //template < typename InItr>
