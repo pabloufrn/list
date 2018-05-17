@@ -70,7 +70,7 @@ int main(){
 
     /// =====================================    TESTES CORRETOS TODOS    ================================================  
     
-    std::cout << "GERANDO LISTA COM NUMERAÇÃO\n";
+    std::cout << "\n>>> GERANDO LISTA COM NUMERAÇÃO\n";
     ls::list<int> v1(10);
     v1.print();
     std::cout << std::endl;
@@ -78,7 +78,7 @@ int main(){
 
     ls::list<int> valores;
     std::list<int> lista_auxiliar = {1, 2, 3, 4};
-    std::cout << " ==============  TESTE DO push_front(), push_back()  =================  \n";
+    std::cout << "\n>>>  TESTE DO push_front(), push_back()\n";
     valores.push_front(20);
     valores.push_front(10);
     valores.push_back(40);
@@ -87,7 +87,7 @@ int main(){
     std::cout << "LISTA VALORES = ";
     valores.print();
 
-    std::cout << "\n==============  TESTE DO construtor a partir de outra lista  =================  \n";
+    std::cout << "\n\n>>>  TESTE DO construtor a partir de outra lista\n";
     ls::list<int> valores_copia(valores);
     std::cout << "NOVA LISTA = ";
     valores_copia.print();
@@ -99,23 +99,23 @@ int main(){
     auto first_ = std_list_b.begin();
     auto last_ = std_list_b.end();
 
-    std::cout << "GERANDO LISTA COM PONTEIROS\n";
+    std::cout << "\n>>> GERANDO LISTA COM PONTEIROS\n";
     ls::list<int> v2(first_, last_);
     v2.print();
     std::cout << std::endl;
 
-    std::cout << "GERANDO LISTA COM LISTA INICIALIZADORA\n";
+    std::cout << "\n>>> GERANDO LISTA COM LISTA INICIALIZADORA\n";
     ls::list<int> v3({2,3,4,5,6,7});
     v3.print();
     std::cout << std::endl;
 
-    std::cout << "GERANDO LISTA COM ATRIBUIÇÃO DE UMA LISTA INICIALIZADORA\n";
+    std::cout << "\n>>> GERANDO LISTA COM ATRIBUIÇÃO DE UMA LISTA INICIALIZADORA\n";
     ls::list<int> v4;
     v4 = {5,10,15,20,25};
     v4.print();
     std::cout << std::endl;
 
-    std::cout << "\n==============  TESTE DO operador de atribuição  =================  \n";
+    std::cout << "\n\n>>>  TESTE DO operador de atribuição\n";
     std::cout << "LISTA1 = ";
     valores.print();
     std::cout << std::endl;
@@ -125,14 +125,14 @@ int main(){
     valores_atr.print();
     std::cout << std::endl;
 
-    std::cout << "\n====================  TESTE DO SIZE(), EMPTY()  ====================  \n";
+    std::cout << "\n\n>>>  TESTE DO SIZE(), EMPTY()\n";
     std::cout << " Quantidade: " << valores.size() << " Vazia? ";
     if(valores.empty())
         std::cout << "SIM" << std::endl;
     else
         std::cout << "NÃO" << std::endl; 
 
-    std::cout << "================  TESTE DO POP_FRONT(), POP_BACK()  ================  ";
+    std::cout << "\n>>>  TESTE DO POP_FRONT(), POP_BACK()";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     std::cout << "\nPOP_FRONT():";
@@ -143,14 +143,12 @@ int main(){
     valores.print();
     std::cout << std::endl;
 
-    
-
-    std::cout << "====================  TESTE DO FRONT(), BACK()  ====================  ";
+    std::cout << "\n>>>  TESTE DO FRONT(), BACK()";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     std::cout << " Front = " << valores.front() << "    Back = " << valores.back() << std::endl;
     
-    std::cout << " =================== TESTE DO INSERT() - RANGES   ===================  ";
+    std::cout << "\n>>> TESTE DO INSERT() - RANGES";
     std::cout << "\nLISTA VALORES: ";
     valores.print();
     auto result = valores.insert(valores.begin(), lista_auxiliar.begin(), lista_auxiliar.end());
@@ -158,7 +156,7 @@ int main(){
     valores.print();
     std::cout << "\nRETORNO: " << *(result) << std::endl;
 
-    std::cout << "==============  TESTE DO ASSIGN(const T & value)  ==================  ";
+    std::cout << "\n>>>  TESTE DO ASSIGN(const T & value)";
     std::cout << "\nLISTA ORIGINAL: ";
     valores.print();
     valores.assign(2);
@@ -166,7 +164,7 @@ int main(){
     valores.print();
     std::cout << "\n";
 
-    std::cout << "================== TESTE DO CLEAR() ======================";
+    std::cout << "\n>>> TESTE DO CLEAR()";
     std::cout << "\nLISTA ORIGINAL: ";
     valores.print();
     valores.clear();
@@ -174,24 +172,35 @@ int main(){
     valores.print();
     std::cout << std::endl;
 
-    std::cout << "================= TESTE DO ERASE(ITERATOR POS) =============\n";
+    std::cout << "\n>>> TESTE DO ERASE(ITERATOR POS)\n";
     std::cout << "Lista: ";
     ls::list<int> e_1 = {1,2,3,4,5};
     e_1.print();
 
-    std::cout << "Após o erase();\n";
-    auto valor = e_1.erase(e_1.begin());
+    std::cout << "\nApós o erase();\n";
+    auto valor = e_1.erase(e_1.begin()+3);
+    std::cout << "O valor agora ficou " << *valor <<  "\n";
     e_1.print();
 
-
-    std::cout << std::endl << "\n\n\n\n\nNão entendo pq está dando isso se não tem nada kkkk \n";
     
-    std::cout << ">>> Teste do find()\n";
+    std::cout << "\n\n>>> Teste do find(value)\n";
     ls::list<int> f_1 = {5,10,15,20,25,30};
-    auto pos = f_1.find(15);
-    //auto v = *pos;
-    //std::cout << "Valor: " << v;     //<- Falha de Segmentação
+    auto pos = f_1.find(25);
+    auto v = *pos;
+    std::cout << "Valor: " << v;
     std::cout << std::endl;
+
+    std::cout << "\n>>> Teste do find(ponteiro, value)\n";
+    ls::list<int> f_2 = {5,10,15,20,25,30};
+    auto pos2 = f_2.find(f_2.begin() +4, 30);
+    std::cout << "Valor: " << *pos2;
+    std::cout << std::endl;
+
+    std::cout << "\n>>> Everything okay!\n";
+
+    
+
+    
 
     /* ----------------------------------------------------------------------------------------------------- CRIAR OS PONTEIROS CONST
 

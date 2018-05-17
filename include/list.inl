@@ -142,7 +142,7 @@ my_iterator<T> my_iterator<T>::operator+( int valor )
         ++i;
     }
 
-    return list<T>::iterador(this->current);
+    return my_iterator<T>(this->current);
 }
 
 template <typename T>
@@ -470,24 +470,19 @@ template < typename T >
 void list<T>::clear(){
     auto current(m_head->next);
 
-    if( current == m_tail ){
-        std::cout << "[ empty ]\n";
-    } else{
+    
+    while(current != m_tail){
 
-        while(current != m_tail){
+        auto last (current);
+        current = current->next;
 
-            auto last (current);
-            current = current->next;
+        last->prev->next = current;
+        last->next->prev = last->prev;
+        last->next = nullptr;
+        last->prev = nullptr;
+  
+        delete last;
 
-            last->prev->next = current;
-            last->next->prev = last->prev;
-            last->next = nullptr;
-            last->prev = nullptr;
-
-            delete last;
-
-
-        }
 
     }
 
@@ -875,10 +870,10 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
 ///**/
 
 template < typename T >
-typename list<T>::const_iterator list<T>::find( list<T>::iterator pos, const T & target ) const{
+typename list<T>::iterator list<T>::find( list<T>::iterator pos, const T & target ) const{
 
-    auto prev( pos.current );
-    auto current( pos.current->next );
+    auto prev( pos.current->prev );
+    auto current( pos.current );
 
     if( current != m_tail ){
         while( current != m_tail and current->data != target ){
@@ -893,14 +888,13 @@ typename list<T>::const_iterator list<T>::find( list<T>::iterator pos, const T &
 }
 
 template < typename T >
-typename list<T>::const_iterator list<T>::find( const T & target ) const{
+typename list<T>::iterator list<T>::find( const T & target ) const{
 
     auto prev( m_head );
     auto current( m_head->next );
 
     if( current != m_tail ){
         while( current != m_tail and current->data != target ){
-            std::cout << "T\n";
             prev = current;
             current = current->next;
         }
