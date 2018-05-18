@@ -12,10 +12,10 @@ using namespace ls;
 
 
 template <typename T>
-inline my_const_iterator<T>::my_const_iterator(Node<my_const_iterator::value_type> * node): current(node)
+inline my_const_iterator<T>::my_const_iterator(Node<my_const_iterator<T>::value_type> * node): current(node)
 {
+    /* empty */
 }
-
 /// Acessar o conteúdo o qual o ponteiro aponta.
 template <typename T>
 typename my_const_iterator<T>::const_reference & my_const_iterator<T>::operator*() const
@@ -643,25 +643,25 @@ T& list<T>::at(list<T>::size_type & index)
 template <typename T>
 typename list<T>::iterator list<T>::begin()
 {
-    return list<T>::iterator(this->m_head->next);
+    return list<T>::iterator(m_head->next);
 
 }
 
 template < typename T >
 typename list<T>::const_iterator list<T>::cbegin() const{
-    return list<T>::const_iterator(this->m_head->next);
+    return list<T>::const_iterator(m_head->next);
 }
 
 
 template < typename T >
 typename list<T>::iterator list<T>::end(){
-    return list<T>::iterator(this->m_tail);
+    return list<T>::iterator(m_tail);
 }
 
 
 template < typename T >
 typename list<T>::const_iterator list<T>::cend() const{
-    return list<T>::const_iterator(this->m_tail);
+    return list<T>::const_iterator(m_tail);
 }
 
 

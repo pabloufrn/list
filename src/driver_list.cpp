@@ -5,18 +5,24 @@
 #include <list>
 
 using namespace std;
-/*
-bool cmp(ls::list& va, std::list& vb){
+
+template < typename T >
+bool cmp(ls::list<T> & va, std::list<T> & vb){
+    auto f1(va);
+    auto f2(vb);
+
     auto size = va.size();
     if(size != vb.size())
         return false;
     for(auto i(0u); i < size; i++){
-        if(va[i] != vb[i])
+        if(*(va.begin()+i) != *(vb.begin()+i))
             return false;
+
+        
     }
     return true;
 }
-
+/*
 std::ostream & operator<<( std::ostream& os_, const std::list<int>& v_ ){
     os_ << "Vetor = [ ";
     for( auto i(0u); i < v_.size(); i++ ){
@@ -29,51 +35,16 @@ std::ostream & operator<<( std::ostream& os_, const std::list<int>& v_ ){
 */
 int main(){
 #ifdef DEBUG
-    
-    // DEBUG
-    
-    /*unique_ptr< ls::list<int> > list_a(new ls::list<int>);
-    unique_ptr< ls::list<int> > list_b(new ls::list<int>);
-    unique_ptr< std::list<int> > std_list_a(new std::list<int>);
-    unique_ptr< std::list<int> > std_list_b(new std::list<int>);
-    
-    ls::list<int>::iterator it_ls_a;
-    std::list<int>::iterator it_std_a;
-    ls::list<int>::iterator it_ls_b;
-    std::list<int>::iterator it_std_b;
-    // inserção três Elementos ordenado
-    
-    list_a->push_front(1);
-    list_a->print();
-    std::cout << "\n";
-    list_a->push_front(2);
-    list_a->print();
-    std::cout << "\n";
-    list_a->push_front(3);
-    list_a->print();
-    std::cout << "\n";
-
-    *std_list_b = {4, 5, 6}; 
- 
-    auto first = std_list_b->cbegin();
-    auto last = std_list_b->cend();
-   // ++last;
-    std::cout << "first: " << *first << " last: " << *last << std::endl;
-    auto result = list_a->insert(++list_a->begin(), first , last);
-    list_a->print();
-    std::cout << " result: " << *result << std::endl;
-    std::cout << "begin : " << *list_a->begin() << std::endl;
-    result = list_a->insert(++list_a->begin(), 7);
-    list_a->print();
-    std::cout << " result: " << *result << std::endl;*/
 
 
     /// =====================================    TESTES CORRETOS TODOS    ================================================  
     
     std::cout << "\n>>> GERANDO LISTA COM NUMERAÇÃO\n";
+    std::list<int> v1_std(10);
     ls::list<int> v1(10);
     v1.print();
     std::cout << std::endl;
+
 
 
     ls::list<int> valores;
@@ -240,45 +211,51 @@ int main(){
     std::cout << "\n\n>>> Everything okay!\n";
 
     
-
-    /* ----------------------------------------------------------------------------------------------------- CRIAR OS PONTEIROS CONST
-
+    
     std::cout << "================== TESTE DO OPERADOR==(LIST1, LIST2) ======================\nTESTE 1 - Listas:\n";
     v1.print();
+    std::cout << std::endl;
     v2.print();
-    std::cout << "As listas são ";
+    std::cout << "\nAs listas são ";
     if( v1 == v2 )
         std::cout << "iguais!\n";
     else
         std::cout << "diferentes!\n";
+
     ls::list<int> v1_1(v1);
+    
     std::cout << "TESTE 2 - Listas:\n";
     v1.print();
+    std::cout << std::endl;
     v1_1.print();
-    std::cout << "As listas são ";
+    std::cout << "\nAs listas são ";
     if( v1 == v1_1 )
         std::cout << "iguais!\n";
     else
         std::cout << "diferentes!\n";
 
+
     std::cout << "================== TESTE DO OPERADOR!=(LIST1, LIST2) ======================\nTESTE 1 - Listas:\n";
     v1.print();
+    std::cout << std::endl;
     v2.print();
-    std::cout << "As listas são ";
+    std::cout << "\nAs listas são ";
     if( v1 != v2 )
         std::cout << "diferentes!\n";
     else
         std::cout << "iguais!\n";
+
     std::cout << "TESTE 2 - Listas:\n";
     v1.print();
+    std::cout << std::endl;
     v1_1.print();
-    std::cout << "As listas são ";
+    std::cout << "\nAs listas são ";
     if( v1 != v1_1 )
         std::cout << "diferentes!\n";
     else
         std::cout << "iguais!\n";
     
-   */
+   
     
 #endif
     

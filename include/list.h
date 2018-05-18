@@ -207,8 +207,11 @@ namespace ls {
         if( lhs.size() != rhs.size() )
             return false;
 
-        auto l = lhs.begin();
-        auto r = rhs.begin();
+        list<T> & lhs_c = const_cast< list<T> & >(lhs);
+        list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+        auto l(lhs_c.begin());
+        auto r(rhs_c.begin());
 
         for( auto i(0u); i < lhs.size() ; ++i){
 
@@ -230,8 +233,11 @@ namespace ls {
     if( lhs.size() != rhs.size() )
             return true;
 
-        auto l = lhs.begin();
-        auto r = rhs.begin();
+        list<T> & lhs_c = const_cast< list<T> & >(lhs);
+        list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+        auto l(lhs_c.begin());
+        auto r(rhs_c.begin());
 
         for( auto i(0u); i < lhs.size() ; ++i){
 
