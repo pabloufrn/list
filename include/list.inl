@@ -463,6 +463,8 @@ template < typename T >
 void list<T>::clear(){
     auto current(m_head->next);
 
+    m_size = 0;
+
     while(current != m_tail){
 
         auto last (current);
@@ -770,6 +772,8 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos,  std::initiali
     current_node->next = pos.current;
     pos.current->prev = current_node;
 
+    m_size += size;
+
     return list<T>::iterator(inserted_pos_before.current->next);
 }
 
@@ -782,11 +786,13 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
     pos.current->next = nullptr;
     pos.current->prev = nullptr;
 
+
     antes->next = depois;
     depois->prev = antes;
 
     delete pos.current;
 
+    --m_size;
     return depois;
 
 }
@@ -810,6 +816,8 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator first, list<T>::ite
         f->prev = nullptr;
 
         delete f;
+
+        --m_size;
 
         f = next_;
 
