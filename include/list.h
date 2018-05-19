@@ -6,13 +6,10 @@
 namespace ls {
 
     template<typename T>
-        class list;
+    class list;
 
     template<typename T>
-        void swap(list<T>& first_, list<T>& second_);
-
-    template<typename T>
-        std::ostream & operator<<(std::ostream & os_, const list<T>& v_ );
+    std::ostream & operator<<(std::ostream & os_, const list<T>& v_ );
 
     /// Structure to each element in the list.
     template<typename T>
@@ -239,23 +236,24 @@ namespace ls {
                 reference at(size_type & index);
 
                 /// Prints the values in the list.
-                void print()
+                friend std::ostream & operator<<(std::ostream & os_, const list<T>& v_ )
                 {
-                    auto current( this->m_head->next );
+                    auto current( v_.m_head->next );
                     std::cout << "[ ";
 
                     // verify is the list it's empty.
-                    if ( current == this->m_tail ) std::cout << "empty";
+                    if ( current == v_.m_tail ) std::cout << "empty";
                     else
                     {
                         // Walks each element and print one by one.
-                        while( current != this->m_tail )
+                        while( current != v_.m_tail )
                         {
                             std::cout << current->data << " ";
                             current = current->next;
                         }
                     }
                     std::cout << "]\n";
+                    return os_;
                 }
 
             private:
@@ -330,6 +328,9 @@ namespace ls {
         return false;
 
     }
+
+    /// Prints the values in the list.
+    
 }
 
 #include "list.inl"
