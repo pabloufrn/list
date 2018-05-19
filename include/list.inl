@@ -12,7 +12,7 @@ using namespace ls;
 
 
 template <typename T>
-inline my_const_iterator<T>::my_const_iterator(Node<my_const_iterator<T>::value_type> * node): current(node)
+inline my_const_iterator<T>::my_const_iterator(Node<T> * node): current(node)
 {
     /* empty */
 }
@@ -36,7 +36,7 @@ template <typename T>
 my_const_iterator<T> my_const_iterator<T>::operator++( int )
 {
     this->current = this->current->next;
-    return list<T>::const_iterator(this->current->prev);
+    return my_const_iterator(this->current->prev);
 }
 
 /// Operador de pré-decremento.
@@ -47,7 +47,7 @@ my_const_iterator<T> & my_const_iterator<T>::operator--()
     this->current = this->current->prev;
     return list<T>::const_iterator(this->current);
 }
-/**/
+
 /// Operador de pós-decremento. 
 template <typename T>
 my_const_iterator<T> my_const_iterator<T>::operator--( int )
@@ -62,28 +62,37 @@ bool my_const_iterator<T>::operator==( const my_const_iterator<T> & rhs ) const
 {
     return this->current == rhs.current;
 }
-/**/
-/// Comprar dois iteradores se são difentes.
+
+/// Comprarar se dois iteradores são diferentes.
 
 template <typename T>
 bool my_const_iterator<T>::operator!=( const my_const_iterator<T> & rhs ) const
 {
     return this->current != rhs.current;
 }
+/// Advances iterator to a specific position (walking throught the nodes).
+template <typename T>
+my_const_iterator<T> my_const_iterator<T>::operator+( int valor )
+{
+    
+    auto i(0);
+    while( i != valor){
+        this->current = this->current->next;
+        ++i;
+    }
 
-
-
-
+    return my_const_iterator<T>(this->current);
+}
 // ####################### ITERATOR #######################
 
 template <typename T>
-inline my_iterator<T>::my_iterator( Node<my_iterator::value_type> * node ): current(node) 
+inline my_iterator<T>::my_iterator( Node<T> * node ): current(node) 
 {
-    /* empty */
+ 
 }
 
 template <typename T>
-inline typename my_iterator<T>::reference my_iterator<T>::operator*() const
+inline typename my_iterator<T>::const_reference my_iterator<T>::operator*() const
 {
     return this->current->data;
 }
@@ -112,8 +121,10 @@ my_iterator<T> my_iterator<T>::operator++( int )
     return my_iterator<T>(old_current);
 }
 
+
 /// Operador de pré-decremento.
 /* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
+
 template <typename T>
 my_iterator<T> & my_iterator<T>::operator--()
 {
@@ -133,7 +144,6 @@ my_iterator<T> my_iterator<T>::operator--( int )
 template <typename T>
 my_iterator<T> my_iterator<T>::operator+( int valor )
 {
-    
     auto i(0);
     while( i != valor){
         this->current = this->current->next;
@@ -165,6 +175,8 @@ template < typename T >
 bool my_iterator<T>::operator!=(my_iterator<T>& rhs) const{
     return this->current != rhs.current;
 }
+
+
 
 // ####################### LIST #######################
 
@@ -705,7 +717,47 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, InItr first, I
     current_node->next = pos.current;
     pos.current->prev = current_node;
 
-    return inserted_pos_before.current->next;
+    return list<T>::iterator(inserted_pos_before.current->next);
+}
+
+template < typename T >
+template < typename InItr >
+typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos, InItr first, InItr last )
+{
+   /* O iterador 'InItr' é um iterador qualquer que desconhecemos o comportamento.
+     * O que temos que fazer é que os valores armazenados no itervalo possam ser acessiveis
+     * pela nossa list. Sabendo que o node usado dentro do intervalo pode ser incompativel
+     * com nosso node.
+     */
+
+    /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
+     * elemento a ser inserido*/
+    auto inserted_pos_before(list<T>::iterator(pos.current->prev));
+    inserted_pos_before.current->next = pos.current->next;
+
+    // percorremos o range
+    Node<T> *new_node;
+
+    auto size = std::distance(first, last);
+    /* não foi usado o while diretamente com ranges pois o iterator da lista do STL não tem
+     * o operador '<', e mesmo que existisse causaria perda de desempenho, visto que é necessário
+     * percorrer a lista inteira para encontrar um dos iteratores e determina se a posição é menor.
+     * Por um problema equivalente, não vale a pena usar o operador [], mesmo sabendo as posições.*/
+     
+    auto current_node(pos.current->prev);
+   
+    for(auto i(0); i < size; i++)
+    {
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
+        first++;
+    }
+    
+    current_node->next = pos.current;
+    pos.current->prev = current_node;
+
+    return list<T>::iterator(inserted_pos_before.current->next);
 }
 
 template < typename T >
@@ -742,10 +794,75 @@ typename list<T>::iterator list<T>::insert(list<T>::iterator pos, const T & valu
     return new_node->next;
 }
 
+template < typename T >
+typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos, const T & value)
+{
+    // cria o no a ser inserido
+    Node<T>* new_node = new Node<T>(value, pos.current->prev, pos.current);
+    // caso especial da lista vazia
+    if(pos.current == nullptr)
+    {
+        m_head = new_node;
+        m_tail = new_node;
+    }
 
+    // Adiciona a quantidade de novos elementos no vetor.
+    m_size++;
+
+    // caso especial: inicio da lista
+    if(pos.current->prev == nullptr)
+    {
+        pos.current->prev = new_node;
+        m_head = new_node;
+    }
+    else if( pos.current->next == nullptr ){            // !< caso em que o elemento a ser inserido é no final da lista.
+        pos.current->next = new_node;
+        m_tail = new_node;
+    }
+    else
+    {
+        pos.current->prev->next = new_node;
+        pos.current->prev = new_node;
+    }
+
+    return new_node;
+}
 
 template < typename T >
 typename list<T>::iterator list<T>::insert(list<T>::iterator pos,  std::initializer_list<T> ilist)
+{
+    /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
+     * elemento a ser inserido*/
+    auto inserted_pos_before(list<T>::iterator(pos.current->prev));
+    inserted_pos_before.current->next = pos.current->next;
+
+    // percorremos o range
+    Node<T> *new_node;
+    
+    auto first = ilist.begin();
+
+    auto size = std::distance(first, ilist.end());
+     
+    auto current_node(pos.current->prev);
+   
+    for(auto i(0); i < size; i++)
+    {
+        new_node = new Node<T>(*first, current_node);
+        current_node->next = new_node;
+        current_node = new_node;
+        first++;
+    }
+    
+    current_node->next = pos.current;
+    pos.current->prev = current_node;
+
+    m_size += size;
+
+    return list<T>::iterator(inserted_pos_before.current->next);
+}
+
+template < typename T >
+typename list<T>::iterator list<T>::insert(list<T>::const_iterator pos,  std::initializer_list<T> ilist)
 {
     /* guarda uma posição antes da posição a ser inserida, pois no futuro o next dela será o primeiro
      * elemento a ser inserido*/
@@ -798,7 +915,57 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator pos ){
 }
 
 template < typename T >
+typename list<T>::iterator list<T>::erase( list<T>::const_iterator pos ){
+
+    auto antes(pos.current->prev);
+    auto depois(pos.current->next);
+
+    pos.current->next = nullptr;
+    pos.current->prev = nullptr;
+
+
+    antes->next = depois;
+    depois->prev = antes;
+
+    delete pos.current;
+
+    --m_size;
+    return depois;
+
+}
+
+template < typename T >
 typename list<T>::iterator list<T>::erase( list<T>::iterator first, list<T>::iterator last ){
+
+    auto f(first.current);
+    auto pos(f->prev);
+
+    auto l(last.current);
+
+    while(f != l){
+
+        auto next_ = f->next;
+
+        f->prev->next = f->next;
+        f->next->prev = f->prev;
+
+        f->next = nullptr;
+        f->prev = nullptr;
+
+        delete f;
+
+        --m_size;
+
+        f = next_;
+
+    }
+
+    return pos->next;
+
+}
+
+template < typename T >
+typename list<T>::iterator list<T>::erase( list<T>::const_iterator first, list<T>::const_iterator last ){
 
     auto f(first.current);
     auto pos(f->prev);

@@ -32,7 +32,7 @@ namespace ls {
     public:
         /// Alias
         /// Alias to the constant data type.
-        using value_type = const T;
+        using value_type = T;
         /// Pointer to the constant data type.
         using pointer = value_type *;
         /// Referece to the constant data type.
@@ -50,6 +50,8 @@ namespace ls {
         my_const_iterator & operator--();
         /// Advances iterator to the prev location within the list. Example: i--;
         my_const_iterator operator--( int );
+        /// Advances iterator to a specific position (walking throught the nodes).
+        my_const_iterator operator+( int );
         /// As in it1 == it2 : returns true if both iterators refer to the same location within the list, and false otherwise.
         bool operator==( const my_const_iterator & rhs ) const;
         /// As in it1 != it2 : returns true if both iterators refer to a different location within the list, and false otherwise.
@@ -57,7 +59,7 @@ namespace ls {
 
     protected:
         /// Current node.
-        Node<value_type> *current;
+        Node<T> *current;
         /// Constructor.
         my_const_iterator( Node<value_type> * node = nullptr );
         friend class list<value_type>;
@@ -67,7 +69,7 @@ namespace ls {
     template < typename T>
         class my_iterator : public my_const_iterator<T> 
     {
-
+        
             public:
 
                 /// Alias
@@ -83,11 +85,11 @@ namespace ls {
                 using difference_type = std::ptrdiff_t;
 
                 /// Constructor default.
-                my_iterator( Node<value_type> * = nullptr ); 
+                my_iterator(); 
                 /// Return the constant data in that position.
-                reference & operator*() const;
+                const_reference & operator*() const;
                 /// Return the data in that position.
-                reference & operator* ();
+                reference & operator*();
 
                 /// Advances iterator to the next location within the list. Example: ++i;
                 my_iterator & operator++();
@@ -109,6 +111,7 @@ namespace ls {
                 bool operator!=(  my_iterator & rhs ) const;
             private:
                 Node<T> *current; 
+                my_iterator( Node<T> *p );
                 friend class list<value_type>;
         };
 
@@ -206,27 +209,33 @@ namespace ls {
                 /*!< Adds value into the list before the position given by the iterator pos . 
                  *   The method returns an iterator to the position of the inserted item.
                  */
-                iterator insert(iterator pos,   const T & value);
+                iterator insert(iterator pos, const T & value);
+                iterator insert(const_iterator pos, const T & value);
                 /*!<
                  *   Inserts elements from the range [first; last) before pos .
                  */
                 template < typename InItr >
                 iterator insert( iterator pos, InItr first, InItr last);
+                template < typename InItr >
+                iterator insert( const_iterator pos, InItr first, InItr last);
                 /*!<
                  * Inserts elements from the initializer list ilist before pos . Initializer list supports the user
                  * of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the elements 1, 2, 3, and 4
                  * in the list before pos , assuming that myList is a list of int.
                  */
                 iterator insert( iterator pos, std::initializer_list<T>);
+                iterator insert( const_iterator pos, std::initializer_list<T>);
                 /*!<
                  *   Removes the object at position pos . The method returns an iterator to the element that follows pos before the call.
                  *   This operation invalidates pos , since the item it pointed to was removed from the list.
                  */
                 iterator erase( iterator pos );
+                iterator erase( const_iterator pos );
                 /*!<
                  *   Removes elements in the range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                  */
                 iterator erase( iterator first, iterator last );
+                iterator erase( const_iterator first, const_iterator last );
                 /// Search a specific value in a list and return a pointer to the previous element before the element found.
                 iterator find( const T & value ) const;
                 /// Finds a specific value in a position and return a pointer to the previous element before the element found.

@@ -8,7 +8,7 @@ using namespace std;
 
 template < typename T >
 bool cmp(ls::list<T> & va, std::list<T> & vb){
-    auto f(va.begin());
+    auto f(va.cbegin());
     auto size = va.size();
     if(size != vb.size())
 
@@ -32,7 +32,9 @@ int main(){
     
     std::cout << "\n>>> GERANDO LISTA COM NUMERAÇÃO\n";
     std::list<int> v1_std(10);
+    
     ls::list<int> v1(10);
+    
     std::cout << v1 << std::endl;
 
     assert(cmp(v1, v1_std) && "Error at generate with a number");
@@ -186,7 +188,7 @@ int main(){
     // A versão STL não possui esse método.
     std::cout << "\n>>> Teste do find(ponteiro, value)\n";
     ls::list<int> f_2 = {5,10,15,20,25,30};
-    auto pos2 = f_2.find(f_2.begin() +4, 30);
+    auto pos2 = f_2.find(f_2.begin()+4, 30);
     std::cout << "Valor: " << *pos2;
     std::cout << std::endl;
 
@@ -280,6 +282,10 @@ int main(){
     else
         std::cout << "iguais!\n";
     
+    std::cout << "================== TESTE DO OPERADOR cbegin ======================\nTESTE 1 - Listas:\n";
+   
+    std::cout << "cbegin : " << *a_4.cbegin() << std::endl;
+    /**/
    
     
 #endif
