@@ -1097,3 +1097,78 @@ typename list<T>::iterator list<T>::find( const T & target ) const{
     return list<T>::iterator(prev);
 
 }
+template < typename T >
+std::ostream & ls::operator<<(std::ostream & os_, const list<T>& v_ ){
+    auto current( v_.m_head->next );
+    std::cout << "[ ";
+    
+    // verify is the list it's empty.
+    if ( current == v_.m_tail ) std::cout << "empty";
+    else
+    {
+        // Walks each element and print one by one.
+        while( current != v_.m_tail )
+        {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+    }
+    std::cout << "]\n";
+    return os_;
+}
+
+template < typename T >
+    bool ls::operator==( const list<T>& lhs, const list<T>& rhs )
+    {
+
+        if( lhs.size() != rhs.size() )
+            return false;
+
+        list<T> & lhs_c = const_cast< list<T> & >(lhs);
+        list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+        auto l(lhs_c.begin());
+        auto r(rhs_c.begin());
+
+        for( auto i(0u); i < lhs.size() ; ++i){
+
+            if(*l != *r)
+                return false;
+
+            l++;
+            r++;
+
+        }
+
+        return true;
+
+    }
+
+    /*!<
+     * Checks if the contents of lhs and rhs are differents, that is, whether lhs.size() != rhs.size()
+     * and each element in lhs compares different with the element in rhs at the same position.
+     */
+    template < typename T >
+    bool ls::operator!=( const list<T>& lhs, const list<T>& rhs ){
+    if( lhs.size() != rhs.size() )
+            return true;
+
+        list<T> & lhs_c = const_cast< list<T> & >(lhs);
+        list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+        auto l(lhs_c.begin());
+        auto r(rhs_c.begin());
+
+        for( auto i(0u); i < lhs.size() ; ++i){
+
+            if(*l != *r)
+                return true;
+
+            l++;
+            r++;
+
+        }
+
+        return false;
+
+    }

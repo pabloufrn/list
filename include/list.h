@@ -9,7 +9,7 @@ namespace ls {
     class list;
 
     template<typename T>
-    std::ostream & operator<<(std::ostream & os_, const list<T>& v_ );
+    std::ostream & operator<<(std::ostream & , const list<T> &);
 
     /// Structure to each element in the list.
     template<typename T>
@@ -210,12 +210,18 @@ namespace ls {
                  *   The method returns an iterator to the position of the inserted item.
                  */
                 iterator insert(iterator pos, const T & value);
+                /*!< Adds value into the list before the position given by the iterator pos . 
+                 *   The method returns an iterator to the position of the inserted item.
+                 */
                 iterator insert(const_iterator pos, const T & value);
                 /*!<
                  *   Inserts elements from the range [first; last) before pos .
                  */
                 template < typename InItr >
                 iterator insert( iterator pos, InItr first, InItr last);
+                /*!<
+                 *   Inserts elements from the range [first; last) before pos .
+                 */
                 template < typename InItr >
                 iterator insert( const_iterator pos, InItr first, InItr last);
                 /*!<
@@ -224,17 +230,29 @@ namespace ls {
                  * in the list before pos , assuming that myList is a list of int.
                  */
                 iterator insert( iterator pos, std::initializer_list<T>);
+                /*!<
+                 * Inserts elements from the initializer list ilist before pos . Initializer list supports the user
+                 * of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the elements 1, 2, 3, and 4
+                 * in the list before pos , assuming that myList is a list of int.
+                 */
                 iterator insert( const_iterator pos, std::initializer_list<T>);
                 /*!<
                  *   Removes the object at position pos . The method returns an iterator to the element that follows pos before the call.
                  *   This operation invalidates pos , since the item it pointed to was removed from the list.
                  */
                 iterator erase( iterator pos );
+                /*!<
+                 *   Removes the object at position pos . The method returns an iterator to the element that follows pos before the call.
+                 *   This operation invalidates pos , since the item it pointed to was removed from the list.
+                 */
                 iterator erase( const_iterator pos );
                 /*!<
                  *   Removes elements in the range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                  */
                 iterator erase( iterator first, iterator last );
+                /*!<
+                 *   Removes elements in the range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
+                 */
                 iterator erase( const_iterator first, const_iterator last );
                 /// Search a specific value in a list and return a pointer to the previous element before the element found.
                 iterator find( const T & value ) const;
@@ -245,25 +263,7 @@ namespace ls {
                 reference at(size_type & index);
 
                 /// Prints the values in the list.
-                friend std::ostream & operator<<(std::ostream & os_, const list<T>& v_ )
-                {
-                    auto current( v_.m_head->next );
-                    std::cout << "[ ";
-
-                    // verify is the list it's empty.
-                    if ( current == v_.m_tail ) std::cout << "empty";
-                    else
-                    {
-                        // Walks each element and print one by one.
-                        while( current != v_.m_tail )
-                        {
-                            std::cout << current->data << " ";
-                            current = current->next;
-                        }
-                    }
-                    std::cout << "]\n";
-                    return os_;
-                }
+                friend std::ostream & operator<< <T>(std::ostream & , const list& );
 
             private:
                 /// List's size.
@@ -284,59 +284,14 @@ namespace ls {
      * and each element in lhs compares equal with the element in rhs at the same position.
      */
     template < typename T >
-    bool operator==( const list<T>& lhs, const list<T>& rhs ){
-
-        if( lhs.size() != rhs.size() )
-            return false;
-
-        list<T> & lhs_c = const_cast< list<T> & >(lhs);
-        list<T> & rhs_c = const_cast< list<T> & >(rhs);
-
-        auto l(lhs_c.begin());
-        auto r(rhs_c.begin());
-
-        for( auto i(0u); i < lhs.size() ; ++i){
-
-            if(*l != *r)
-                return false;
-
-            l++;
-            r++;
-
-        }
-
-        return true;
-
-    }
+    bool operator==( const list<T>& lhs, const list<T>& rhs );
 
     /*!<
      * Checks if the contents of lhs and rhs are differents, that is, whether lhs.size() != rhs.size()
      * and each element in lhs compares different with the element in rhs at the same position.
      */
     template < typename T >
-    bool operator!=( const list<T>& lhs, const list<T>& rhs ){
-    if( lhs.size() != rhs.size() )
-            return true;
-
-        list<T> & lhs_c = const_cast< list<T> & >(lhs);
-        list<T> & rhs_c = const_cast< list<T> & >(rhs);
-
-        auto l(lhs_c.begin());
-        auto r(rhs_c.begin());
-
-        for( auto i(0u); i < lhs.size() ; ++i){
-
-            if(*l != *r)
-                return true;
-
-            l++;
-            r++;
-
-        }
-
-        return false;
-
-    }
+    bool operator!=( const list<T>& lhs, const list<T>& rhs );
 
     /// Prints the values in the list.
     
