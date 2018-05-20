@@ -1,0 +1,171 @@
+\hypertarget{classls_1_1list}{}\section{Referência da Template de Classe ls\+:\+:list$<$ T $>$}
+\label{classls_1_1list}\index{ls\+::list$<$ T $>$@{ls\+::list$<$ T $>$}}
+
+
+List implementation.  
+
+
+
+
+{\ttfamily \#include $<$list.\+h$>$}
+
+\subsection*{Tipos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1list_a71c7a4d7061c0c3f23aba13232eda0f6}\label{classls_1_1list_a71c7a4d7061c0c3f23aba13232eda0f6}} 
+using \hyperlink{classls_1_1list_a71c7a4d7061c0c3f23aba13232eda0f6}{value\+\_\+type} = T
+\begin{DoxyCompactList}\small\item\em Alias to type stored in container. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}\label{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}} 
+using \hyperlink{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}{size\+\_\+type} = size\+\_\+t
+\begin{DoxyCompactList}\small\item\em Alias to size type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}\label{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}} 
+using \hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} = \hyperlink{classls_1_1my__iterator}{my\+\_\+iterator}$<$ \hyperlink{classls_1_1list_a71c7a4d7061c0c3f23aba13232eda0f6}{value\+\_\+type} $>$
+\begin{DoxyCompactList}\small\item\em Alias to bidirectional iterator used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}\label{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}} 
+using \hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} = \hyperlink{classls_1_1my__const__iterator}{my\+\_\+const\+\_\+iterator}$<$ \hyperlink{classls_1_1list_a71c7a4d7061c0c3f23aba13232eda0f6}{value\+\_\+type} $>$
+\begin{DoxyCompactList}\small\item\em Alias to const type of bidirectional iterator used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_afb0f652e0362bc8c3e82c16efe795bf3}\label{classls_1_1list_afb0f652e0362bc8c3e82c16efe795bf3}} 
+using \hyperlink{classls_1_1list_afb0f652e0362bc8c3e82c16efe795bf3}{reference} = T \&
+\begin{DoxyCompactList}\small\item\em Alias to data reference. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Métodos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1list_a3717713cf5e4558e543b533d14eef424}\label{classls_1_1list_a3717713cf5e4558e543b533d14eef424}} 
+\hyperlink{classls_1_1list_a3717713cf5e4558e543b533d14eef424}{list} ()
+\begin{DoxyCompactList}\small\item\em Default constructor that creates an empty list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a4badb105feef42346fbc3a26be770387}\label{classls_1_1list_a4badb105feef42346fbc3a26be770387}} 
+\hyperlink{classls_1_1list_a4badb105feef42346fbc3a26be770387}{list} (\hyperlink{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}{size\+\_\+type} count)
+\begin{DoxyCompactList}\small\item\em Constructs the list with count default-\/inserted instances of T. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a783b17259b4ac0805c58d6a959d3c11f}\label{classls_1_1list_a783b17259b4ac0805c58d6a959d3c11f}} 
+{\footnotesize template$<$typename Input\+It $>$ }\\\hyperlink{classls_1_1list_a783b17259b4ac0805c58d6a959d3c11f}{list} (Input\+It first, Input\+It last)
+\begin{DoxyCompactList}\small\item\em Constructs the list with the contents of the range \mbox{[}first, last). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a167e96cf439f62fbefca1d06a958c798}\label{classls_1_1list_a167e96cf439f62fbefca1d06a958c798}} 
+\hyperlink{classls_1_1list_a167e96cf439f62fbefca1d06a958c798}{list} (const \hyperlink{classls_1_1list}{list} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. Constructs the list with the deep copy of the contents of other. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ac4d5e3102e51f80bcc82fdab0b8d187f}\label{classls_1_1list_ac4d5e3102e51f80bcc82fdab0b8d187f}} 
+\hyperlink{classls_1_1list_ac4d5e3102e51f80bcc82fdab0b8d187f}{list} (std\+::initializer\+\_\+list$<$ T $>$ ilist)
+\begin{DoxyCompactList}\small\item\em Constructs the list with the contents of the initializer list init. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ab341963c62740c4e4d1a042fdba9c856}\label{classls_1_1list_ab341963c62740c4e4d1a042fdba9c856}} 
+\hyperlink{classls_1_1list_ab341963c62740c4e4d1a042fdba9c856}{$\sim$list} ()
+\begin{DoxyCompactList}\small\item\em Destructs the list. The destructors of the elements are called and the used storage is deallocated. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_aa447eb049c1c13b2846aba8689b875af}\label{classls_1_1list_aa447eb049c1c13b2846aba8689b875af}} 
+\hyperlink{classls_1_1list}{list}$<$ T $>$ \& \hyperlink{classls_1_1list_aa447eb049c1c13b2846aba8689b875af}{operator=} (const \hyperlink{classls_1_1list}{list}$<$ T $>$ \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. Replaces the contents with a copy of the contents of other. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a87472ac420c9de170637cb35aefbde8c}\label{classls_1_1list_a87472ac420c9de170637cb35aefbde8c}} 
+\hyperlink{classls_1_1list}{list}$<$ T $>$ \& \hyperlink{classls_1_1list_a87472ac420c9de170637cb35aefbde8c}{operator=} (std\+::initializer\+\_\+list$<$ T $>$ ilist)
+\begin{DoxyCompactList}\small\item\em Replaces the contents with those identified by initializer list ilist. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a73458e8145cc3ee958fb59940084ab61}\label{classls_1_1list_a73458e8145cc3ee958fb59940084ab61}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a73458e8145cc3ee958fb59940084ab61}{begin} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterator pointing to the first item in the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a0c168cf2301ed80e1a853827d366294a}\label{classls_1_1list_a0c168cf2301ed80e1a853827d366294a}} 
+\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} \hyperlink{classls_1_1list_a0c168cf2301ed80e1a853827d366294a}{cbegin} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant iterator pointing to the first item in the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a23e842f652b4da5c445499dc81e67934}\label{classls_1_1list_a23e842f652b4da5c445499dc81e67934}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a23e842f652b4da5c445499dc81e67934}{end} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterator pointing to the end mark in the list, i.\+e. the position just after the last element of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ac8d06153e963e892c146bc227cfbb96c}\label{classls_1_1list_ac8d06153e963e892c146bc227cfbb96c}} 
+\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} \hyperlink{classls_1_1list_ac8d06153e963e892c146bc227cfbb96c}{cend} () const
+\begin{DoxyCompactList}\small\item\em Returns a constant iterator pointing to the end mark in the list, i.\+e. the position just after the last element of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a3cfcda5a97910595ab9268150a1f6019}\label{classls_1_1list_a3cfcda5a97910595ab9268150a1f6019}} 
+\hyperlink{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}{size\+\_\+type} \hyperlink{classls_1_1list_a3cfcda5a97910595ab9268150a1f6019}{size} () const
+\begin{DoxyCompactList}\small\item\em Return the number of elements in the container. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a661ae23af20249a5acd872b5981d222d}\label{classls_1_1list_a661ae23af20249a5acd872b5981d222d}} 
+bool \hyperlink{classls_1_1list_a661ae23af20249a5acd872b5981d222d}{empty} ()
+\begin{DoxyCompactList}\small\item\em Returns true if the container contains no elements, and false otherwise. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a94d588131af6f58af50f85debcc1cd0d}\label{classls_1_1list_a94d588131af6f58af50f85debcc1cd0d}} 
+void \hyperlink{classls_1_1list_a94d588131af6f58af50f85debcc1cd0d}{clear} ()
+\begin{DoxyCompactList}\small\item\em Remove (either logically or physically) all elements from the container. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ad4db2fb23d8774b280f6e8d0f49166c0}\label{classls_1_1list_ad4db2fb23d8774b280f6e8d0f49166c0}} 
+const T \& \hyperlink{classls_1_1list_ad4db2fb23d8774b280f6e8d0f49166c0}{front} () const
+\begin{DoxyCompactList}\small\item\em Returns the object at the beginning of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a7429ad77511be5fe6f165a80c1dc7d02}\label{classls_1_1list_a7429ad77511be5fe6f165a80c1dc7d02}} 
+T \& \hyperlink{classls_1_1list_a7429ad77511be5fe6f165a80c1dc7d02}{front} ()
+\begin{DoxyCompactList}\small\item\em Returns the object at the beginning of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a1439d9f2b9441ffe3e6c0c8111b29cb1}\label{classls_1_1list_a1439d9f2b9441ffe3e6c0c8111b29cb1}} 
+T \& \hyperlink{classls_1_1list_a1439d9f2b9441ffe3e6c0c8111b29cb1}{back} ()
+\begin{DoxyCompactList}\small\item\em Returns the object at the end of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a76c0d5952f1843c0f1183f5acb144103}\label{classls_1_1list_a76c0d5952f1843c0f1183f5acb144103}} 
+const T \& \hyperlink{classls_1_1list_a76c0d5952f1843c0f1183f5acb144103}{back} () const
+\begin{DoxyCompactList}\small\item\em Returns the object at the end of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a3ae27bac754d4ca95da34c9040f33d48}\label{classls_1_1list_a3ae27bac754d4ca95da34c9040f33d48}} 
+void \hyperlink{classls_1_1list_a3ae27bac754d4ca95da34c9040f33d48}{push\+\_\+front} (const T \&value)
+\begin{DoxyCompactList}\small\item\em Adds value to the front of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a21438e1be5b2143896ee8480cb2beb18}\label{classls_1_1list_a21438e1be5b2143896ee8480cb2beb18}} 
+void \hyperlink{classls_1_1list_a21438e1be5b2143896ee8480cb2beb18}{push\+\_\+back} (const T \&value)
+\begin{DoxyCompactList}\small\item\em Adds value to the end of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_aed8db7c16a16cd2d3290576725f7ffdd}\label{classls_1_1list_aed8db7c16a16cd2d3290576725f7ffdd}} 
+void \hyperlink{classls_1_1list_aed8db7c16a16cd2d3290576725f7ffdd}{pop\+\_\+front} ()
+\begin{DoxyCompactList}\small\item\em Removes the object at the front of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a59d8ce6f60dca1e3a30b3e3d9f4154c2}\label{classls_1_1list_a59d8ce6f60dca1e3a30b3e3d9f4154c2}} 
+void \hyperlink{classls_1_1list_a59d8ce6f60dca1e3a30b3e3d9f4154c2}{pop\+\_\+back} ()
+\begin{DoxyCompactList}\small\item\em Removes the object at the end of the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_aef14276ef9726f7ed30dbe9a76f4035f}\label{classls_1_1list_aef14276ef9726f7ed30dbe9a76f4035f}} 
+void \hyperlink{classls_1_1list_aef14276ef9726f7ed30dbe9a76f4035f}{assign} (const T \&value)
+\begin{DoxyCompactList}\small\item\em Replaces the content of the list with copies of value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a8a9ebb0c52a3a472e69cae0f50de5737}\label{classls_1_1list_a8a9ebb0c52a3a472e69cae0f50de5737}} 
+void \hyperlink{classls_1_1list_a8a9ebb0c52a3a472e69cae0f50de5737}{assign} (\hyperlink{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}{size\+\_\+type} count, const T \&value)
+\begin{DoxyCompactList}\small\item\em Clear list and insert count copies of value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a8528bc556cc62982161cd369e65ad3b7}\label{classls_1_1list_a8528bc556cc62982161cd369e65ad3b7}} 
+{\footnotesize template$<$typename In\+Itr $>$ }\\void \hyperlink{classls_1_1list_a8528bc556cc62982161cd369e65ad3b7}{assign} (In\+Itr first, In\+Itr last)
+\begin{DoxyCompactList}\small\item\em Replaces the contents with count copies of value value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a3a502e5df12f088f6fda2edb5f79cfef}\label{classls_1_1list_a3a502e5df12f088f6fda2edb5f79cfef}} 
+void \hyperlink{classls_1_1list_a3a502e5df12f088f6fda2edb5f79cfef}{assign} (std\+::initializer\+\_\+list$<$ T $>$ ilist)
+\begin{DoxyCompactList}\small\item\em Replaces the contents of the list with the elements from the initializer list ilist. We may call, for instance, my\+List.\+assign( \{1, 2, 3, 4\} ), to replace the elements of the list with the elements 1, 2, 3, and 4, assuming that my\+List is a list of int. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_afd87152a830dce5c7583239f9d25e044}\label{classls_1_1list_afd87152a830dce5c7583239f9d25e044}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_afd87152a830dce5c7583239f9d25e044}{insert} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} pos, const T \&value)
+\begin{DoxyCompactList}\small\item\em Adds value into the list before the position given by the iterator pos . The method returns an iterator to the position of the inserted item. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ac91d98c3a9b50bce8df0b6cda06e7e4f}\label{classls_1_1list_ac91d98c3a9b50bce8df0b6cda06e7e4f}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_ac91d98c3a9b50bce8df0b6cda06e7e4f}{insert} (\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} pos, const T \&value)
+\begin{DoxyCompactList}\small\item\em Adds value into the list before the position given by the iterator pos . The method returns an iterator to the position of the inserted item. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a145b47adc8f9ab447baad3c3fa2ccd60}\label{classls_1_1list_a145b47adc8f9ab447baad3c3fa2ccd60}} 
+{\footnotesize template$<$typename In\+Itr $>$ }\\\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a145b47adc8f9ab447baad3c3fa2ccd60}{insert} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} pos, In\+Itr first, In\+Itr last)
+\begin{DoxyCompactList}\small\item\em Inserts elements from the range \mbox{[}first; last) before pos . \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a22440e65537058d8758e416cbf7effc8}\label{classls_1_1list_a22440e65537058d8758e416cbf7effc8}} 
+{\footnotesize template$<$typename In\+Itr $>$ }\\\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a22440e65537058d8758e416cbf7effc8}{insert} (\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} pos, In\+Itr first, In\+Itr last)
+\begin{DoxyCompactList}\small\item\em Inserts elements from the range \mbox{[}first; last) before pos . \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a3781b36cb414bb517672808f98b22938}\label{classls_1_1list_a3781b36cb414bb517672808f98b22938}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a3781b36cb414bb517672808f98b22938}{insert} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} pos, std\+::initializer\+\_\+list$<$ T $>$)
+\begin{DoxyCompactList}\small\item\em Inserts elements from the initializer list ilist before pos . Initializer list supports the user of insert as in my\+List.\+insert( pos, \{1, 2, 3, 4\} ) , which would insert the elements 1, 2, 3, and 4 in the list before pos , assuming that my\+List is a list of int. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a87c6c3007aaec374b29728ec8544b3c1}\label{classls_1_1list_a87c6c3007aaec374b29728ec8544b3c1}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a87c6c3007aaec374b29728ec8544b3c1}{insert} (\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} pos, std\+::initializer\+\_\+list$<$ T $>$)
+\begin{DoxyCompactList}\small\item\em Inserts elements from the initializer list ilist before pos . Initializer list supports the user of insert as in my\+List.\+insert( pos, \{1, 2, 3, 4\} ) , which would insert the elements 1, 2, 3, and 4 in the list before pos , assuming that my\+List is a list of int. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a76b6efa016395fd031baa05d63ebc745}\label{classls_1_1list_a76b6efa016395fd031baa05d63ebc745}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a76b6efa016395fd031baa05d63ebc745}{erase} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} pos)
+\begin{DoxyCompactList}\small\item\em Removes the object at position pos . The method returns an iterator to the element that follows pos before the call. This operation invalidates pos , since the item it pointed to was removed from the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ae616e00db8cc2bd8641baf06cdbd99ab}\label{classls_1_1list_ae616e00db8cc2bd8641baf06cdbd99ab}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_ae616e00db8cc2bd8641baf06cdbd99ab}{erase} (\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} pos)
+\begin{DoxyCompactList}\small\item\em Removes the object at position pos . The method returns an iterator to the element that follows pos before the call. This operation invalidates pos , since the item it pointed to was removed from the list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a6f144b35d56b9bcf88ef8f21ca9aef54}\label{classls_1_1list_a6f144b35d56b9bcf88ef8f21ca9aef54}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a6f144b35d56b9bcf88ef8f21ca9aef54}{erase} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} first, \hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} last)
+\begin{DoxyCompactList}\small\item\em Removes elements in the range \mbox{[}first; last) . The entire list may be erased by calling a.\+erase(a.\+begin(), a.\+end());. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_abcac4200cf9fb2a3bdbbc8e546bc1c3b}\label{classls_1_1list_abcac4200cf9fb2a3bdbbc8e546bc1c3b}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_abcac4200cf9fb2a3bdbbc8e546bc1c3b}{erase} (\hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} first, \hyperlink{classls_1_1list_ad543276e86075caadf97ae64f2fc7cfc}{const\+\_\+iterator} last)
+\begin{DoxyCompactList}\small\item\em Removes elements in the range \mbox{[}first; last) . The entire list may be erased by calling a.\+erase(a.\+begin(), a.\+end());. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_ae666f1d96561501b636670f326715271}\label{classls_1_1list_ae666f1d96561501b636670f326715271}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_ae666f1d96561501b636670f326715271}{find} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Search a specific value in a list and return a pointer to the previous element before the element found. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_a8e97b239d18147a8cba5862dcead7e1f}\label{classls_1_1list_a8e97b239d18147a8cba5862dcead7e1f}} 
+\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} \hyperlink{classls_1_1list_a8e97b239d18147a8cba5862dcead7e1f}{find} (\hyperlink{classls_1_1list_af036cf72da26107a5084c1e4b45b9cb7}{iterator} pos, const T \&value) const
+\begin{DoxyCompactList}\small\item\em Finds a specific value in a position and return a pointer to the previous element before the element found. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1list_abacebefd66b10fa5c24334368471023d}\label{classls_1_1list_abacebefd66b10fa5c24334368471023d}} 
+\hyperlink{classls_1_1list_afb0f652e0362bc8c3e82c16efe795bf3}{reference} \hyperlink{classls_1_1list_abacebefd66b10fa5c24334368471023d}{at} (\hyperlink{classls_1_1list_a91bb77719712ad6127f0bdf97ed5bd64}{size\+\_\+type} \&index)
+\begin{DoxyCompactList}\small\item\em Acess an element at index or throw a out\+\_\+of\+\_\+range exception if the index does not exist. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Amigas}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1list_a0a2ac3f54c0cd7d0c0a1357ed1e4c5ea}\label{classls_1_1list_a0a2ac3f54c0cd7d0c0a1357ed1e4c5ea}} 
+std\+::ostream \& \hyperlink{classls_1_1list_a0a2ac3f54c0cd7d0c0a1357ed1e4c5ea}{operator} (std\+::ostream \&, const \hyperlink{classls_1_1list}{list} \&)
+\begin{DoxyCompactList}\small\item\em Prints the values in the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Descrição Detalhada}
+\subsubsection*{template$<$typename T$>$\newline
+class ls\+::list$<$ T $>$}
+
+List implementation. 
+
+This class is an Abstract Data Type that implements a double linked list storing some type of type of data internally. 
+
+A documentação para esta classe foi gerada a partir do seguinte arquivo\+:\begin{DoxyCompactItemize}
+\item 
+include/list.\+h\end{DoxyCompactItemize}

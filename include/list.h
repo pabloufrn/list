@@ -1,7 +1,6 @@
 #ifndef LS_LIST_H 
 #define LS_LIST_H 
 #include <iostream>
-/*TODO: remover coisas que forem desnecessarias no header*/
 
 namespace ls {
 
@@ -30,7 +29,7 @@ namespace ls {
     class my_const_iterator {
 
     public:
-        /// Alias
+        
         /// Alias to the constant data type.
         using value_type = T;
         /// Pointer to the constant data type.
@@ -40,7 +39,7 @@ namespace ls {
        /// Difference type to calculate the distance between two pointers.
         using difference_type = std::ptrdiff_t;
 
-        //const_iterator(Node<value_type> * node = nullptr);
+        /// Returns a const reference to the value stored in the iterator.
         const_reference & operator* () const;
         /// Advances iterator to the next location within the list. Example: ++i;
         my_const_iterator & operator++();
@@ -71,8 +70,6 @@ namespace ls {
     {
         
             public:
-
-                /// Alias
                 /// Alias to the data type.
                 using value_type = T;
                 /// Pointer to the data type.
@@ -99,7 +96,6 @@ namespace ls {
                 my_iterator & operator--();
                 /// Advances iterator to the prev location within the list. Example: i--;
                 my_iterator operator--( int );
-
                 /// Advances iterator to a specific position (walking throught the nodes).
                 my_iterator operator+( int );
                 
@@ -116,15 +112,21 @@ namespace ls {
         };
 
     /// List implementation.
+    /*! 
+     * This class is an Abstract Data Type that implements a double linked list storing some type of type of data internally.
+     */
     template<typename T>
         class list{
             public:
-                /// ALIASES
+                /// Alias to type stored in container
                 using value_type = T;
+                /// Alias to size type
                 using size_type = size_t;
+                /// Alias to bidirectional iterator used
                 using iterator = my_iterator<value_type>;
+                /// Alias to const type of bidirectional iterator used
                 using const_iterator = my_const_iterator<value_type>;
-                using difference_type = std::ptrdiff_t;
+                /// Alias to data reference
                 using reference = T&;
 
                 // [I] Special Members
@@ -132,7 +134,7 @@ namespace ls {
                 /// Default constructor that creates an empty list.
                 list();
                 /// Constructs the list with count default-inserted instances of T.
-                explicit list( size_type count );
+                explicit list(size_type count);
                 /// Constructs the list with the contents of the range [first, last).
                 template < typename InputIt >
                 list( InputIt first , InputIt last );
@@ -191,66 +193,68 @@ namespace ls {
                 void pop_back();
                 /// Replaces the content of the list with copies of value.
                 void assign( const T & value );
-
-                void assign( size_type count, const T& value ); //  Replaces the contents with count copies of value value.
+                /// Clear list and insert count copies of value.
+                void assign( size_type count, const T& value ); 
 
                 // [IV-a] Modifies with iterators
 
-                /*!< 
-                 *   Replaces the contents with count copies of value value .
+                /*! \brief
+                 *   Replaces the contents with count copies of value value.
                  */
                 template < typename InItr>
                 void assign( InItr first, InItr last );
-                /*!<
-                 *   Replaces the contents of the list with the elements from the initializer list ilist. We may call, for instance,
-                 *   myList.assign( {1, 2, 3, 4} ), to replace the elements of the list with the elements 1, 2, 3, and 4, assuming that myList is a list of int.
+                /*! \brief
+                  Replaces the contents of the list with the elements from the initializer list ilist. We may call, for instance,
+                  myList.assign( {1, 2, 3, 4} ), to replace the elements of the list with the elements 1, 2, 3, and 4, assuming that myList is a list of int.
                  */
                 void assign( std::initializer_list<T> ilist );
-                /*!< Adds value into the list before the position given by the iterator pos . 
+                /*! \brief
+                 * Adds value into the list before the position given by the iterator pos . 
                  *   The method returns an iterator to the position of the inserted item.
                  */
                 iterator insert(iterator pos, const T & value);
-                /*!< Adds value into the list before the position given by the iterator pos . 
+                /*! \brief
+                 * Adds value into the list before the position given by the iterator pos . 
                  *   The method returns an iterator to the position of the inserted item.
                  */
                 iterator insert(const_iterator pos, const T & value);
-                /*!<
+                /*! \brief
                  *   Inserts elements from the range [first; last) before pos .
                  */
                 template < typename InItr >
                 iterator insert( iterator pos, InItr first, InItr last);
-                /*!<
+                /*! \brief
                  *   Inserts elements from the range [first; last) before pos .
                  */
                 template < typename InItr >
                 iterator insert( const_iterator pos, InItr first, InItr last);
-                /*!<
+                /*! \brief
                  * Inserts elements from the initializer list ilist before pos . Initializer list supports the user
                  * of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the elements 1, 2, 3, and 4
                  * in the list before pos , assuming that myList is a list of int.
                  */
                 iterator insert( iterator pos, std::initializer_list<T>);
-                /*!<
+                /*! \brief
                  * Inserts elements from the initializer list ilist before pos . Initializer list supports the user
                  * of insert as in myList.insert( pos, {1, 2, 3, 4} ) , which would insert the elements 1, 2, 3, and 4
                  * in the list before pos , assuming that myList is a list of int.
                  */
                 iterator insert( const_iterator pos, std::initializer_list<T>);
-                /*!<
+                /*! \brief
                  *   Removes the object at position pos . The method returns an iterator to the element that follows pos before the call.
                  *   This operation invalidates pos , since the item it pointed to was removed from the list.
                  */
                 iterator erase( iterator pos );
-                /*!<
+                /*! \brief
                  *   Removes the object at position pos . The method returns an iterator to the element that follows pos before the call.
                  *   This operation invalidates pos , since the item it pointed to was removed from the list.
                  */
                 iterator erase( const_iterator pos );
-                /*!<
+                /*! \brief
                  *   Removes elements in the range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                  */
                 iterator erase( iterator first, iterator last );
-                /*!<
+                /*! \brief
                  *   Removes elements in the range [first; last) . The entire list may be erased by calling a.erase(a.begin(), a.end());
                  */
                 iterator erase( const_iterator first, const_iterator last );
@@ -260,6 +264,9 @@ namespace ls {
                 iterator find( iterator pos, const T & value ) const;
 
                 // [V] Acess Operators
+                /*! \brief
+                 * Acess an element at index or throw a out_of_range exception if the index does not exist
+                 */
                 reference at(size_type & index);
 
                 /// Prints the values in the list.
@@ -278,15 +285,15 @@ namespace ls {
 
     // Operator overloading — non-member functions
 
-    
-    /*!<
+
+    /*! \brief
      * Checks if the contents of lhs and rhs are equal, that is, whether lhs.size() == rhs.size()
      * and each element in lhs compares equal with the element in rhs at the same position.
      */
     template < typename T >
     bool operator==( const list<T>& lhs, const list<T>& rhs );
 
-    /*!<
+    /*! \brief
      * Checks if the contents of lhs and rhs are differents, that is, whether lhs.size() != rhs.size()
      * and each element in lhs compares different with the element in rhs at the same position.
      */

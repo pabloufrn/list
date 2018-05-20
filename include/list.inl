@@ -1,6 +1,3 @@
-#include <iostream>
-/*TODO: remover coisas que forem desnecessarias*/
-
 #include "list.h"
 
 using namespace ls;
@@ -83,6 +80,7 @@ my_const_iterator<T> my_const_iterator<T>::operator+( int valor )
 
     return my_const_iterator<T>(this->current);
 }
+
 // ####################### ITERATOR #######################
 
 template <typename T>
@@ -120,10 +118,6 @@ my_iterator<T> my_iterator<T>::operator++( int )
     
     return my_iterator<T>(old_current);
 }
-
-
-/// Operador de pré-decremento.
-/* TODO: olhar se tudo está ok com a definição: http://en.cppreference.com/w/cpp/concept/BidirectionalIterator*/ 
 
 template <typename T>
 my_iterator<T> & my_iterator<T>::operator--()
@@ -961,7 +955,7 @@ typename list<T>::iterator list<T>::erase( list<T>::iterator first, list<T>::ite
     }
 
     return pos->next;
-
+    
 }
 
 template < typename T >
@@ -1075,10 +1069,8 @@ typename list<T>::iterator list<T>::find( list<T>::iterator pos, const T & targe
             current = current->next;
         }
     }
-
-
+    
     return list<T>::iterator(prev);
-
 }
 
 template < typename T >
@@ -1095,8 +1087,8 @@ typename list<T>::iterator list<T>::find( const T & target ) const{
     }
 
     return list<T>::iterator(prev);
-
 }
+
 template < typename T >
 std::ostream & ls::operator<<(std::ostream & os_, const list<T>& v_ ){
     auto current( v_.m_head->next );
@@ -1118,57 +1110,53 @@ std::ostream & ls::operator<<(std::ostream & os_, const list<T>& v_ ){
 }
 
 template < typename T >
-    bool ls::operator==( const list<T>& lhs, const list<T>& rhs )
-    {
+bool ls::operator==( const list<T>& lhs, const list<T>& rhs )
+{
 
-        if( lhs.size() != rhs.size() )
-            return false;
-
-        list<T> & lhs_c = const_cast< list<T> & >(lhs);
-        list<T> & rhs_c = const_cast< list<T> & >(rhs);
-
-        auto l(lhs_c.begin());
-        auto r(rhs_c.begin());
-
-        for( auto i(0u); i < lhs.size() ; ++i){
-
-            if(*l != *r)
-                return false;
-
-            l++;
-            r++;
-
-        }
-
-        return true;
-
-    }
-
-    /*!<
-     * Checks if the contents of lhs and rhs are differents, that is, whether lhs.size() != rhs.size()
-     * and each element in lhs compares different with the element in rhs at the same position.
-     */
-    template < typename T >
-    bool ls::operator!=( const list<T>& lhs, const list<T>& rhs ){
     if( lhs.size() != rhs.size() )
-            return true;
-
-        list<T> & lhs_c = const_cast< list<T> & >(lhs);
-        list<T> & rhs_c = const_cast< list<T> & >(rhs);
-
-        auto l(lhs_c.begin());
-        auto r(rhs_c.begin());
-
-        for( auto i(0u); i < lhs.size() ; ++i){
-
-            if(*l != *r)
-                return true;
-
-            l++;
-            r++;
-
-        }
-
         return false;
 
+    list<T> & lhs_c = const_cast< list<T> & >(lhs);
+    list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+    auto l(lhs_c.begin());
+    auto r(rhs_c.begin());
+
+    for( auto i(0u); i < lhs.size() ; ++i){
+
+        if(*l != *r)
+            return false;
+
+        l++;
+        r++;
+
     }
+
+    return true;
+
+}
+
+template < typename T >
+bool ls::operator!=( const list<T>& lhs, const list<T>& rhs ){
+if( lhs.size() != rhs.size() )
+        return true;
+
+    list<T> & lhs_c = const_cast< list<T> & >(lhs);
+    list<T> & rhs_c = const_cast< list<T> & >(rhs);
+
+    auto l(lhs_c.begin());
+    auto r(rhs_c.begin());
+
+    for( auto i(0u); i < lhs.size() ; ++i){
+
+        if(*l != *r)
+            return true;
+
+        l++;
+        r++;
+
+    }
+
+    return false;
+
+}

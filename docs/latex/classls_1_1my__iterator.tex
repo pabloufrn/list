@@ -1,0 +1,101 @@
+\hypertarget{classls_1_1my__iterator}{}\section{Referência da Template de Classe ls\+:\+:my\+\_\+iterator$<$ T $>$}
+\label{classls_1_1my__iterator}\index{ls\+::my\+\_\+iterator$<$ T $>$@{ls\+::my\+\_\+iterator$<$ T $>$}}
+
+
+Implements the infrastructure to support the bidirectional pointer.  
+
+
+
+
+{\ttfamily \#include $<$list.\+h$>$}
+
+
+
+Diagrama de Hierarquia para ls\+:\+:my\+\_\+iterator$<$ T $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{classls_1_1my__iterator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Diagrama de colaboração para ls\+:\+:my\+\_\+iterator$<$ T $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{classls_1_1my__iterator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Tipos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_aa67b52463c80c463dcb4919c3040903b}\label{classls_1_1my__iterator_aa67b52463c80c463dcb4919c3040903b}} 
+using \hyperlink{classls_1_1my__iterator_aa67b52463c80c463dcb4919c3040903b}{value\+\_\+type} = T
+\begin{DoxyCompactList}\small\item\em Alias to the data type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a65792c5672e5b22715ec2b58c32e016a}\label{classls_1_1my__iterator_a65792c5672e5b22715ec2b58c32e016a}} 
+using \hyperlink{classls_1_1my__iterator_a65792c5672e5b22715ec2b58c32e016a}{pointer} = \hyperlink{classls_1_1my__const__iterator_aa7aa8489a065e4ddda33727d33c84b7d}{value\+\_\+type} $\ast$
+\begin{DoxyCompactList}\small\item\em Pointer to the data type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_ad3b5d3648d5b83344888204a9e6d7bfa}\label{classls_1_1my__iterator_ad3b5d3648d5b83344888204a9e6d7bfa}} 
+using \hyperlink{classls_1_1my__iterator_ad3b5d3648d5b83344888204a9e6d7bfa}{reference} = \hyperlink{classls_1_1my__const__iterator_aa7aa8489a065e4ddda33727d33c84b7d}{value\+\_\+type} \&
+\begin{DoxyCompactList}\small\item\em Referece to the data type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a7a136fd439ffd4ed9d67a794d1001935}\label{classls_1_1my__iterator_a7a136fd439ffd4ed9d67a794d1001935}} 
+using \hyperlink{classls_1_1my__iterator_a7a136fd439ffd4ed9d67a794d1001935}{const\+\_\+reference} = const \hyperlink{classls_1_1my__const__iterator_aa7aa8489a065e4ddda33727d33c84b7d}{value\+\_\+type} \&
+\begin{DoxyCompactList}\small\item\em Reference to the constant data type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a706553fcf9e3ea711d454eb7604aae1e}\label{classls_1_1my__iterator_a706553fcf9e3ea711d454eb7604aae1e}} 
+using \hyperlink{classls_1_1my__iterator_a706553fcf9e3ea711d454eb7604aae1e}{difference\+\_\+type} = std\+::ptrdiff\+\_\+t
+\begin{DoxyCompactList}\small\item\em Difference type to calculate the distance between two pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Métodos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_ac18d9ac910a22e6b294edaecf86bfd19}\label{classls_1_1my__iterator_ac18d9ac910a22e6b294edaecf86bfd19}} 
+\hyperlink{classls_1_1my__iterator_ac18d9ac910a22e6b294edaecf86bfd19}{my\+\_\+iterator} ()
+\begin{DoxyCompactList}\small\item\em Constructor default. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_ab8ae439a58cd299cbd364b3edf1dd855}\label{classls_1_1my__iterator_ab8ae439a58cd299cbd364b3edf1dd855}} 
+\hyperlink{classls_1_1my__const__iterator_a47552bc9ef18669651047b1741c7ed42}{const\+\_\+reference} \& \hyperlink{classls_1_1my__iterator_ab8ae439a58cd299cbd364b3edf1dd855}{operator$\ast$} () const
+\begin{DoxyCompactList}\small\item\em Return the constant data in that position. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a3eec7197d3d2b31cea843bc41b28451e}\label{classls_1_1my__iterator_a3eec7197d3d2b31cea843bc41b28451e}} 
+\hyperlink{classls_1_1my__iterator_ad3b5d3648d5b83344888204a9e6d7bfa}{reference} \& \hyperlink{classls_1_1my__iterator_a3eec7197d3d2b31cea843bc41b28451e}{operator$\ast$} ()
+\begin{DoxyCompactList}\small\item\em Return the data in that position. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_aa958375bc05acb1767e82e69373c9a25}\label{classls_1_1my__iterator_aa958375bc05acb1767e82e69373c9a25}} 
+\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \& \hyperlink{classls_1_1my__iterator_aa958375bc05acb1767e82e69373c9a25}{operator++} ()
+\begin{DoxyCompactList}\small\item\em Advances iterator to the next location within the list. Example\+: ++i;. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a87cd11c26f7cff8fb68631d100354143}\label{classls_1_1my__iterator_a87cd11c26f7cff8fb68631d100354143}} 
+\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \hyperlink{classls_1_1my__iterator_a87cd11c26f7cff8fb68631d100354143}{operator++} (int)
+\begin{DoxyCompactList}\small\item\em Advances iterator to the next location within the list. Example\+: i++;. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a27cc5599241072286f87eb3a05275dce}\label{classls_1_1my__iterator_a27cc5599241072286f87eb3a05275dce}} 
+\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \& \hyperlink{classls_1_1my__iterator_a27cc5599241072286f87eb3a05275dce}{operator-\/-\/} ()
+\begin{DoxyCompactList}\small\item\em Advances iterator to the prev location within the list. Example\+: --i;. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a4e31b9ed0b69c94db7027415c1ad5192}\label{classls_1_1my__iterator_a4e31b9ed0b69c94db7027415c1ad5192}} 
+\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \hyperlink{classls_1_1my__iterator_a4e31b9ed0b69c94db7027415c1ad5192}{operator-\/-\/} (int)
+\begin{DoxyCompactList}\small\item\em Advances iterator to the prev location within the list. Example\+: i--;. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a77ccb3303f10b6930457fd090c4f2187}\label{classls_1_1my__iterator_a77ccb3303f10b6930457fd090c4f2187}} 
+\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \hyperlink{classls_1_1my__iterator_a77ccb3303f10b6930457fd090c4f2187}{operator+} (int)
+\begin{DoxyCompactList}\small\item\em Advances iterator to a specific position (walking throught the nodes). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_af87392d8c1ad98e669827f622771053a}\label{classls_1_1my__iterator_af87392d8c1ad98e669827f622771053a}} 
+bool \hyperlink{classls_1_1my__iterator_af87392d8c1ad98e669827f622771053a}{operator$<$} (\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \&) const
+\begin{DoxyCompactList}\small\item\em Verifies if a element is less then another. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a7582cc03e5885a77599f509dd06bb0cf}\label{classls_1_1my__iterator_a7582cc03e5885a77599f509dd06bb0cf}} 
+bool \hyperlink{classls_1_1my__iterator_a7582cc03e5885a77599f509dd06bb0cf}{operator==} (\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \&rhs) const
+\begin{DoxyCompactList}\small\item\em As in it1 == it2 \+: returns true if both iterators refer to the same location within the list, and false otherwise. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_a57a517f86159fc752b74b06a73fdfa68}\label{classls_1_1my__iterator_a57a517f86159fc752b74b06a73fdfa68}} 
+bool \hyperlink{classls_1_1my__iterator_a57a517f86159fc752b74b06a73fdfa68}{operator!=} (\hyperlink{classls_1_1my__iterator}{my\+\_\+iterator} \&rhs) const
+\begin{DoxyCompactList}\small\item\em As in it1 != it2 \+: returns true if both iterators refer to a different location within the list, and false otherwise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Amigas}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classls_1_1my__iterator_aa4cf6f043abfca0b41eb074c92dac6fa}\label{classls_1_1my__iterator_aa4cf6f043abfca0b41eb074c92dac6fa}} 
+class {\bfseries list$<$ value\+\_\+type $>$}
+\end{DoxyCompactItemize}
+\subsection*{Outros membros herdados}
+
+
+\subsection{Descrição Detalhada}
+\subsubsection*{template$<$typename T$>$\newline
+class ls\+::my\+\_\+iterator$<$ T $>$}
+
+Implements the infrastructure to support the bidirectional pointer. 
+
+A documentação para esta classe foi gerada a partir do seguinte arquivo\+:\begin{DoxyCompactItemize}
+\item 
+include/list.\+h\end{DoxyCompactItemize}
