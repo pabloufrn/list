@@ -39,8 +39,7 @@ arquivo exec: link simbólico para executável gerado pelo comando make.
 arquivo Makefile: arquivo usado pelo comando make para gerar o arquivo binário do projeto.
 
 # Documentação
-Acesse a documentação sem precisar baixar.
-[documentação](https://pabloufrn.github.io/list/html/index.html)
+Acesse a [documentação](https://pabloufrn.github.io/list/html/index.html) sem precisar baixar.
 
 # Authorship
 Program developed by Henrique David de Medeiros (henriquemed101@gmail.com) and Pablo Emanuell L. Targino (pabloemanuell@academico.ufrn.br).
