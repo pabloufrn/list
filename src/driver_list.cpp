@@ -284,9 +284,16 @@ int main(){
     
     std::cout << "================== TESTE DO OPERADOR cbegin ======================\nTESTE 1 - Listas:\n";
    
-    std::cout << "cbegin : " << *a_4.cbegin() << std::endl;
-    /**/
-   
+    std::cout << "cbegin: " << *a_4.cbegin() << std::endl;
+
+    std::cout << "================== TESTE DO USANDO std::next ======================\nTESTE 1 - Listas:\n";
+
+    auto it = std::next(a_4.begin(), 2);
+
+    std::cout << "next: " << *it << std::endl;
+
+
+
     
 #endif
     

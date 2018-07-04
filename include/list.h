@@ -80,6 +80,8 @@ namespace ls {
                 using const_reference = const value_type &;  
                 /// Difference type to calculate the distance between two pointers.
                 using difference_type = std::ptrdiff_t;
+		/// Iterator category (use in functions that require iterator_traits requirements)
+		using iterator_category = std::forward_iterator_tag;
 
                 /// Constructor default.
                 my_iterator(); 
