@@ -1,8 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
-#include "../include/list.h"
 #include <list>
+
+#include "list.h"
 
 using namespace std;
 
@@ -25,8 +26,6 @@ bool cmp(ls::list<T> & va, std::list<T> & vb){
 }
 
 int main(){
-#ifdef DEBUG
-
 
     /// =====================================    TESTS   ================================================  
     
@@ -36,6 +35,7 @@ int main(){
     ls::list<int> v1(10);
     
     std::cout << v1 << std::endl;
+ 
 
     assert(cmp(v1, v1_std) && "Error at generate with a number");
 
@@ -292,10 +292,5 @@ int main(){
 
     std::cout << "next: " << *it << std::endl;
 
-
-
-    
-#endif
-    
     return 0;
 }
